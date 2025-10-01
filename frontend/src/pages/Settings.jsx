@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const Settings = () => {
+  const { isDark, toggleTheme, setIsDark } = useTheme();
   const [activeTab, setActiveTab] = useState('profile');
   const [settings, setSettings] = useState({
     // User Profile
@@ -16,7 +18,13 @@ const Settings = () => {
         criticalAlerts: true
       }
     },
-    
+    // For theme
+    preferences: {
+      theme: isDark ? 'dark' : 'light',
+      notifications: true,
+      autoRefresh: true
+    },
+
     // Data Sources
     dataSources: {
       patents: {
@@ -74,6 +82,14 @@ const Settings = () => {
       }
     }
   });
+
+  const handleThemeChange = (newTheme) => {
+    if (newTheme === 'dark') {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+  };
 
   const handleSettingChange = (category, key, value) => {
     setSettings(prev => ({
@@ -146,6 +162,7 @@ const Settings = () => {
 
   const tabs = [
     { id: 'profile', label: 'User Profile', icon: '👤' },
+    { id: 'appearance', label: 'Appearance', icon: '🎨' },
     { id: 'data-sources', label: 'Data Sources', icon: '📊' },
     { id: 'analytics', label: 'Analytics', icon: '📈' },
     { id: 'integrations', label: 'Integrations', icon: '🔗' },
@@ -187,6 +204,77 @@ const Settings = () => {
 
         {/* Settings Content */}
         <div className="settings-content">
+          {/* App Appearance */}
+          {activeTab === 'appearance' && (
+            <div className="settings-section">
+              <h2>Appearance</h2>
+              
+              <div className="appearance-options">
+                <div className="form-group">
+                  <label>Theme</label>
+                  <div className="theme-options">
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="light"
+                        checked={!isDark}
+                        onChange={() => handleThemeChange('light')}
+                      />
+                      <span className="radiomark"></span>
+                      Light Mode
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="dark"
+                        checked={isDark}
+                        onChange={() => handleThemeChange('dark')}
+                      />
+                      <span className="radiomark"></span>
+                      Dark Mode
+                    </label>
+                    <label className="radio-label">
+                      <input
+                        type="radio"
+                        name="theme"
+                        value="auto"
+                        onChange={() => {
+                          // Auto theme based on system preference
+                          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                            setIsDark(true);
+                          } else {
+                            setIsDark(false);
+                          }
+                        }}
+                      />
+                      <span className="radiomark"></span>
+                      Auto (System)
+                    </label>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Preview</label>
+                  <div className="theme-preview">
+                    <div className={`preview-card ${isDark ? 'dark' : 'light'}`}>
+                      <div className="preview-header">
+                        <h4>Theme Preview</h4>
+                      </div>
+                      <div className="preview-content">
+                        <p>This is how your interface will look</p>
+                        <div className="preview-stats">
+                          <div className="preview-stat">Sample Stat</div>
+                          <div className="preview-stat">Sample Data</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {/* Profile Settings */}
           {activeTab === 'profile' && (
             <div className="settings-section">
