@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import DashboardPage from './components/TestDashboard';
+import DashboardPage from './pages/TestDashboard';
 import Dashboard from './pages/Dashboard';
 import TechnologyIntelligence from './pages/TechnologyIntelligence';
 import AnalyticsForecasting from './pages/AnalyticsForecasting';
@@ -32,7 +32,7 @@ function App() {
               <Route path="/technology-intelligence" element={<TechnologyIntelligence />} />
               <Route path="/analytics" element={<AnalyticsForecasting />} />
               <Route path="/patents" element={<PatentAnalysis />} />
-              <Route path="/dashboardold" element={<DashboardPage />} />
+              <Route path="/dashboardold" element={<Dashboard />} />
               <Route path="/publications" element={<ResearchPublications />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
