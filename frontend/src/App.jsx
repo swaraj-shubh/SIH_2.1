@@ -10,6 +10,7 @@ import PatentAnalysis from './pages/PatentAnalysis';
 import ResearchPublications from './pages/ResearchPublications';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
+import TechIntelligenceDashboard from './pages/TestDashboardBase';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,6 +35,7 @@ function App() {
               <Route path="/patents" element={<PatentAnalysis />} />
               <Route path="/dashboardold" element={<Dashboard />} />
               <Route path="/publications" element={<ResearchPublications />} />
+              <Route path="/dashboardBase" element={<TechIntelligenceDashboard />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </main>
