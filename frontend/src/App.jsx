@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -9,17 +8,22 @@ import AnalyticsForecasting from './pages/AnalyticsForecasting';
 import PatentAnalysis from './pages/PatentAnalysis';
 import ResearchPublications from './pages/ResearchPublications';
 import Settings from './pages/Settings';
-import './App.css';
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <ThemeProvider>
     <Router>
-      <div className="app">
-        <Header />
-        <div className="app-body">
-          <Sidebar />
-          <main className="main-content">
+      <div className="flex h-screen bg-gray-50">
+        {/* Sidebar */}
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        
+        {/* Main content */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Header setSidebarOpen={setSidebarOpen} />
+          
+          {/* Page content */}
+          <main className="flex-1 overflow-y-auto p-4">
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/technology-intelligence" element={<TechnologyIntelligence />} />
@@ -32,7 +36,6 @@ function App() {
         </div>
       </div>
     </Router>
-    </ThemeProvider>
   );
 }
 

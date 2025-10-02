@@ -1,192 +1,66 @@
 import React from 'react';
 
-const FilterPanel = ({ filters, onFiltersChange }) => {
-  const technologyDomains = [
-    'Artificial Intelligence',
-    'Quantum Computing',
-    'Biotechnology',
-    'Nanotechnology',
-    'Robotics & Automation',
-    'Advanced Materials',
-    'Renewable Energy',
-    'Cybersecurity',
-    'Space Technology',
-    'Advanced Computing'
-  ];
-
-  const trlStages = [
-    { label: 'Basic Research (TRL 1-2)', range: [1, 2] },
-    { label: 'Technology Formulation (TRL 3-4)', range: [3, 4] },
-    { label: 'Proof of Concept (TRL 5-6)', range: [5, 6] },
-    { label: 'Prototype (TRL 7-8)', range: [7, 8] },
-    { label: 'Commercial Ready (TRL 9)', range: [9, 9] }
-  ];
-
-  const marketSizes = [
-    'Under $100M',
-    '$100M - $1B',
-    '$1B - $10B',
-    '$10B - $100B',
-    'Over $100B'
-  ];
-
-  const handleFilterChange = (key, value) => {
-    onFiltersChange({
-      ...filters,
-      [key]: value
-    });
-  };
-
-  const handleRangeChange = (key, min, max) => {
-    onFiltersChange({
-      ...filters,
-      [key]: [min, max]
-    });
-  };
-
-  const clearFilters = () => {
-    onFiltersChange({
-      domain: '',
-      trlRange: [1, 9],
-      marketSize: '',
-      growthRate: '',
-      country: ''
-    });
-  };
+const FilterPanel = ({ filters, onFilterChange }) => {
+  const domains = ['AI/ML', 'Quantum Computing', 'Cybersecurity', 'Advanced Materials', 'Biotechnology', 'Robotics'];
+  const trlLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
-    <div className="filter-panel">
-      <div className="filter-panel-header">
-        <h3>Filters</h3>
-        <button 
-          className="clear-all-filters"
-          onClick={clearFilters}
-        >
-          Clear All
-        </button>
-      </div>
-
-      <div className="filter-section">
-        <h4>Technology Domain</h4>
-        <div className="filter-options">
-          {technologyDomains.map(domain => (
-            <label key={domain} className="filter-checkbox">
-              <input
-                type="checkbox"
-                checked={filters.domain === domain}
-                onChange={(e) => 
-                  handleFilterChange('domain', e.target.checked ? domain : '')
-                }
-              />
-              <span className="checkmark"></span>
-              {domain}
-            </label>
-          ))}
-        </div>
-      </div>
-
-      <div className="filter-section">
-        <h4>TRL Range</h4>
-        <div className="trl-filter">
-          <div className="trl-range-display">
-            TRL {filters.trlRange[0]} - {filters.trlRange[1]}
-          </div>
-          <div className="range-slider">
-            <input
-              type="range"
-              min="1"
-              max="9"
-              value={filters.trlRange[0]}
-              onChange={(e) => handleRangeChange('trlRange', parseInt(e.target.value), filters.trlRange[1])}
-              className="range-min"
-            />
-            <input
-              type="range"
-              min="1"
-              max="9"
-              value={filters.trlRange[1]}
-              onChange={(e) => handleRangeChange('trlRange', filters.trlRange[0], parseInt(e.target.value))}
-              className="range-max"
-            />
-          </div>
-          <div className="trl-stages">
-            {trlStages.map(stage => (
-              <button
-                key={stage.label}
-                className={`trl-stage-btn ${
-                  filters.trlRange[0] === stage.range[0] && filters.trlRange[1] === stage.range[1] 
-                    ? 'active' 
-                    : ''
-                }`}
-                onClick={() => handleRangeChange('trlRange', ...stage.range)}
-              >
-                {stage.label}
-              </button>
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4">Filters</h3>
+      
+      <div className="space-y-6">
+        {/* Domain Filter */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Technology Domain</label>
+          <div className="space-y-2">
+            {domains.map((domain) => (
+              <label key={domain} className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.domains?.includes(domain) || false}
+                  onChange={(e) => onFilterChange('domains', domain, e.target.checked)}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="ml-2 text-sm text-gray-600">{domain}</span>
+              </label>
             ))}
           </div>
         </div>
-      </div>
 
-      <div className="filter-section">
-        <h4>Market Size</h4>
-        <div className="filter-options">
-          {marketSizes.map(size => (
-            <label key={size} className="filter-radio">
-              <input
-                type="radio"
-                name="marketSize"
-                checked={filters.marketSize === size}
-                onChange={(e) => handleFilterChange('marketSize', size)}
-              />
-              <span className="radiomark"></span>
-              {size}
-            </label>
-          ))}
+        {/* TRL Filter */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">TRL Level</label>
+          <div className="space-y-2">
+            {trlLevels.map((trl) => (
+              <label key={trl} className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.trlLevels?.includes(trl) || false}
+                  onChange={(e) => onFilterChange('trlLevels', trl, e.target.checked)}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="ml-2 text-sm text-gray-600">TRL {trl}</span>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="filter-section">
-        <h4>Growth Rate</h4>
-        <select 
-          value={filters.growthRate || ''}
-          onChange={(e) => handleFilterChange('growthRate', e.target.value)}
-          className="filter-select"
-        >
-          <option value="">Any Growth Rate</option>
-          <option value="high">High (+20%+)</option>
-          <option value="medium">Medium (10-20%)</option>
-          <option value="low">Low (0-10%)</option>
-          <option value="declining">Declining</option>
-        </select>
-      </div>
-
-      <div className="filter-section">
-        <h4>Country/Region</h4>
-        <select 
-          value={filters.country || ''}
-          onChange={(e) => handleFilterChange('country', e.target.value)}
-          className="filter-select"
-        >
-          <option value="">All Countries</option>
-          <option value="US">United States</option>
-          <option value="CN">China</option>
-          <option value="EU">European Union</option>
-          <option value="JP">Japan</option>
-          <option value="KR">South Korea</option>
-          <option value="IN">India</option>
-        </select>
-      </div>
-
-      <div className="filter-stats">
-        <div className="active-filters">
-          <strong>Active Filters:</strong>
-          {Object.entries(filters).map(([key, value]) => 
-            value && value !== '' && !(Array.isArray(value) && value[0] === 1 && value[1] === 9) ? (
-              <span key={key} className="active-filter-tag">
-                {key}: {Array.isArray(value) ? value.join('-') : value}
-              </span>
-            ) : null
-          )}
+        {/* Market Size Filter */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Market Size</label>
+          <div className="space-y-2">
+            {['< $1B', '$1B - $10B', '$10B - $50B', '> $50B'].map((range) => (
+              <label key={range} className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={filters.marketSize?.includes(range) || false}
+                  onChange={(e) => onFilterChange('marketSize', range, e.target.checked)}
+                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                />
+                <span className="ml-2 text-sm text-gray-600">{range}</span>
+              </label>
+            ))}
+          </div>
         </div>
       </div>
     </div>

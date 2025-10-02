@@ -1,82 +1,71 @@
 import React, { useState } from 'react';
 import SearchBar from '../components/SearchBar';
-import ChartContainer from '../components/ChartContainer';
 import DataTable from '../components/DataTable';
-import { patents, patentCharts, patentTableData } from '../mockData/mockData';
+import ChartContainer from '../components/ChartContainer';
+import { patents } from '../mockData/patents';
 
 const PatentAnalysis = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
+  const patentColumns = [
+    { key: 'title', title: 'Patent Title' },
+    { key: 'number', title: 'Patent Number' },
+    { key: 'assignee', title: 'Assignee' },
+    { key: 'country', title: 'Country' },
+    { key: 'filingDate', title: 'Filing Date' },
+    { key: 'technology', title: 'Technology Domain' },
+  ];
+
+  const filteredPatents = patents.filter(patent =>
+    patent.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patent.assignee.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patent.technology.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="patent-analysis">
-      <div className="page-header">
-        <h1>Patent Analysis</h1>
-        <p>Comprehensive patent intelligence and trend analysis</p>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">Patent Analysis</h1>
+        <p className="text-gray-600">Global patent landscape and intellectual property analysis</p>
       </div>
 
-      <div className="search-section">
-        <SearchBar 
-          value={searchTerm}
-          onChange={setSearchTerm}
-          placeholder="Search patents, inventors, assignees..."
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Patent Trends */}
+        <ChartContainer title="Patent Trends Over Time" className="lg:col-span-2">
+          <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+            <div className="text-center">
+              <p className="text-gray-500">Patent Trends Chart</p>
+              <p className="text-gray-400 text-sm">Filing trends and growth patterns</p>
+            </div>
+          </div>
+        </ChartContainer>
+
+        {/* Country Distribution */}
+        <ChartContainer title="Country-wise Distribution">
+          <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
+            <div className="text-center">
+              <p className="text-gray-500">Geographical Distribution</p>
+              <p className="text-gray-400 text-sm">Patent distribution by country</p>
+            </div>
+          </div>
+        </ChartContainer>
       </div>
 
-      <div className="patent-stats">
-        <div className="stat-card">
-          <h3>Total Patents</h3>
-          <p className="stat-number">12,458</p>
-        </div>
-        <div className="stat-card">
-          <h3>Top Country</h3>
-          <p className="stat-number">USA (42%)</p>
-        </div>
-        <div className="stat-card">
-          <h3>Growth Rate</h3>
-          <p className="stat-number">+18% YoY</p>
-        </div>
-      </div>
-
-      <div className="charts-section">
-        <div className="chart-row">
-          <ChartContainer 
-            title="Patent Trends Over Time"
-            chartData={patentCharts.trends}
-            type="line"
+      {/* Patent Search */}
+      <ChartContainer title="Patent Search & Analysis">
+        <div className="space-y-4">
+          <SearchBar 
+            placeholder="Search patents by title, assignee, or technology..."
+            onSearch={setSearchTerm}
           />
-          <ChartContainer 
-            title="Patent Distribution by Country"
-            chartData={patentCharts.countryDistribution}
-            type="bar"
+          
+          <DataTable 
+            data={filteredPatents}
+            columns={patentColumns}
           />
         </div>
-        <div className="chart-row">
-          <ChartContainer 
-            title="Top Assignees"
-            chartData={patentCharts.topAssignees}
-            type="pie"
-          />
-          <ChartContainer 
-            title="Technology Domain Distribution"
-            chartData={patentCharts.technologyDistribution}
-            type="radar"
-          />
-        </div>
-      </div>
-
-      <div className="patent-table">
-        <h2>Recent Patents</h2>
-        <DataTable 
-          data={patentTableData}
-          columns={[
-            { key: 'title', label: 'Patent Title' },
-            { key: 'assignee', label: 'Assignee' },
-            { key: 'country', label: 'Country' },
-            { key: 'filingDate', label: 'Filing Date' },
-            { key: 'technology', label: 'Technology' }
-          ]}
-        />
-      </div>
+      </ChartContainer>
     </div>
   );
 };

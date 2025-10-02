@@ -1,120 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const SearchBar = ({ value, onChange, placeholder = "Search...", onSearch, advanced = false }) => {
-  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const [filters, setFilters] = useState({
-    source: '',
-    dateRange: '',
-    domain: ''
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (onSearch) {
-      onSearch({ query: value, filters });
-    }
-  };
-
-  const handleFilterChange = (key, value) => {
-    const newFilters = { ...filters, [key]: value };
-    setFilters(newFilters);
-  };
-
+const SearchBar = ({ placeholder = "Search...", onSearch, className = '' }) => {
   return (
-    <div className="search-bar-container">
-      <form onSubmit={handleSubmit} className="search-form">
-        <div className="search-input-group">
-          <div className="search-icon">🔍</div>
-          <input
-            type="text"
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={placeholder}
-            className="search-input"
-          />
-          <button type="submit" className="search-button">
-            Search
-          </button>
-          {advanced && (
-            <button
-              type="button"
-              className="advanced-toggle"
-              onClick={() => setIsAdvancedOpen(!isAdvancedOpen)}
-            >
-              ⚙️ Advanced
-            </button>
-          )}
-        </div>
-
-        {advanced && isAdvancedOpen && (
-          <div className="advanced-filters">
-            <div className="filter-group">
-              <label>Data Source</label>
-              <select 
-                value={filters.source} 
-                onChange={(e) => handleFilterChange('source', e.target.value)}
-              >
-                <option value="">All Sources</option>
-                <option value="patents">Patents</option>
-                <option value="publications">Publications</option>
-                <option value="market">Market Data</option>
-                <option value="companies">Companies</option>
-              </select>
-            </div>
-
-            <div className="filter-group">
-              <label>Time Range</label>
-              <select 
-                value={filters.dateRange} 
-                onChange={(e) => handleFilterChange('dateRange', e.target.value)}
-              >
-                <option value="">All Time</option>
-                <option value="1y">Last Year</option>
-                <option value="2y">Last 2 Years</option>
-                <option value="5y">Last 5 Years</option>
-                <option value="custom">Custom Range</option>
-              </select>
-            </div>
-
-            <div className="filter-group">
-              <label>Technology Domain</label>
-              <select 
-                value={filters.domain} 
-                onChange={(e) => handleFilterChange('domain', e.target.value)}
-              >
-                <option value="">All Domains</option>
-                <option value="ai">Artificial Intelligence</option>
-                <option value="quantum">Quantum Computing</option>
-                <option value="biotech">Biotechnology</option>
-                <option value="nanotech">Nanotechnology</option>
-                <option value="robotics">Robotics</option>
-              </select>
-            </div>
-
-            <div className="filter-actions">
-              <button 
-                type="button" 
-                className="btn-secondary"
-                onClick={() => setFilters({ source: '', dateRange: '', domain: '' })}
-              >
-                Clear Filters
-              </button>
-            </div>
-          </div>
-        )}
-      </form>
-
-      {value && (
-        <div className="search-results-info">
-          <span>Showing results for: <strong>"{value}"</strong></span>
-          <button 
-            className="clear-search"
-            onClick={() => onChange('')}
-          >
-            Clear
-          </button>
-        </div>
-      )}
+    <div className={`relative ${className}`}>
+      <input
+        type="text"
+        placeholder={placeholder}
+        onChange={(e) => onSearch(e.target.value)}
+        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      <div className="absolute left-3 top-2.5">
+        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
     </div>
   );
 };

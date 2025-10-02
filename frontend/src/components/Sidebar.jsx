@@ -1,47 +1,62 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
 
-  const menuItems = [
-    { path: '/', label: 'Dashboard', icon: '📊' },
-    { path: '/technology-intelligence', label: 'Technology Intelligence', icon: '🔍' },
-    { path: '/analytics', label: 'Analytics & Forecasting', icon: '📈' },
-    { path: '/patents', label: 'Patent Analysis', icon: '📑' },
-    { path: '/publications', label: 'Research Publications', icon: '📚' },
-    { path: '/settings', label: 'Settings', icon: '⚙️' }
+  const navigation = [
+    { name: 'Dashboard', href: '/', icon: '📊' },
+    { name: 'Technology Intelligence', href: '/technology-intelligence', icon: '🔍' },
+    { name: 'Analytics & Forecasting', href: '/analytics', icon: '📈' },
+    { name: 'Patent Analysis', href: '/patents', icon: '📑' },
+    { name: 'Research Publications', href: '/publications', icon: '📚' },
+    { name: 'Settings', href: '/settings', icon: '⚙️' },
   ];
 
   return (
-    <aside className="sidebar">
-      <nav className="sidebar-nav">
-        <ul>
-          {menuItems.map(item => (
-            <li key={item.path}>
-              <Link 
-                to={item.path} 
-                className={location.pathname === item.path ? 'active' : ''}
-              >
-                <span className="icon">{item.icon}</span>
-                <span className="label">{item.label}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      
-      <div className="sidebar-footer">
-        <div className="system-status">
-          <h4>Data Sources</h4>
-          <div className="source-status">
-            <span className="status active">Patents DB</span>
-            <span className="status active">Publications</span>
-            <span className="status active">Market Data</span>
-          </div>
+    <>
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 flex z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        >
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-75" aria-hidden="true" />
         </div>
+      )}
+
+      {/* Sidebar */}
+      <div className={`
+        fixed inset-y-0 left-0 z-50 w-64 bg-gray-800 transform transition duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
+        <div className="flex items-center justify-center h-16 bg-gray-900">
+          <h2 className="text-white text-xl font-bold">DRDO Tech Intelligence</h2>
+        </div>
+        
+        <nav className="mt-8">
+          <div className="px-4 space-y-2">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                onClick={() => setSidebarOpen(false)}
+                className={`
+                  group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200
+                  ${location.pathname === item.href
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }
+                `}
+              >
+                <span className="mr-3 text-lg">{item.icon}</span>
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </nav>
       </div>
-    </aside>
+    </>
   );
 };
 
