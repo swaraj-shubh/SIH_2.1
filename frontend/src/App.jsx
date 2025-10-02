@@ -9,6 +9,7 @@ import AnalyticsForecasting from './pages/AnalyticsForecasting';
 import PatentAnalysis from './pages/PatentAnalysis';
 import ResearchPublications from './pages/ResearchPublications';
 import Settings from './pages/Settings';
+import Home from './pages/Home';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,13 +25,14 @@ function App() {
           <Header setSidebarOpen={setSidebarOpen} />
           
           {/* Page content */}
-          <main className="flex-1 overflow-y-auto p-4">
+          <main className="flex-1 overflow-y-auto ">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/technology-intelligence" element={<TechnologyIntelligence />} />
               <Route path="/analytics" element={<AnalyticsForecasting />} />
               <Route path="/patents" element={<PatentAnalysis />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/dashboardold" element={<DashboardPage />} />
               <Route path="/publications" element={<ResearchPublications />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
