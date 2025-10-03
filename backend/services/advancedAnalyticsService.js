@@ -43,7 +43,7 @@ export async function fetchNewsForKeywords(keywords) {
     const allArticles = [];
     const maxPerKeyword = 5;
 
-    for (const keyword of keywords.slice(0, 5)) { // Limit to 5 keywords to avoid rate limits
+    for (const keyword of keywords.slice(0, 5)) {
         try {
             const response = await axios.get("https://api.worldnewsapi.com/search-news", {
                 params: { 
@@ -77,7 +77,6 @@ export async function fetchNewsForKeywords(keywords) {
         }
     }
 
-    // Remove duplicates and sort by date
     const unique = Array.from(new Map(allArticles.map(a => [a.title, a])).values());
     return unique.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
 }
@@ -86,34 +85,61 @@ export async function fetchPatentsForKeywords(keywords) {
     const allPatents = [];
     
     try {
-        const queryString = keywords.slice(0, 5).join(' OR ');
-        
+        const currentDate = new Date();
+        const twoYearsAgo = new Date(currentDate);
+        twoYearsAgo.setFullYear(currentDate.getFullYear() - 2);
+        const dateThreshold = twoYearsAgo.toISOString().split('T')[0];
+
+        console.log('=== Patent Search Debug ===');
+        console.log('Keywords:', keywords.slice(0, 5));
+        console.log('Date threshold:', dateThreshold);
+
         const requestBody = {
             "query": {
                 "bool": {
-                    "should": keywords.slice(0, 5).map(kw => ({
-                        "match": {
-                            "title": {
-                                "query": kw,
-                                "boost": 2
+                    "must": [
+                        {
+                            "bool": {
+                                "should": [
+                                    ...keywords.slice(0, 5).map(kw => ({
+                                        "match": { "title": { "query": kw, "boost": 2 } }
+                                    })),
+                                    ...keywords.slice(0, 5).map(kw => ({
+                                        "match": { "abstract": { "query": kw } }
+                                    }))
+                                ],
+                                "minimum_should_match": 1
                             }
                         }
-                    })).concat(keywords.slice(0, 5).map(kw => ({
-                        "match": {
-                            "abstract": {
-                                "query": kw
+                    ],
+                    "filter": [
+                        {
+                            "range": {
+                                "date_published": { "gte": dateThreshold }
                             }
                         }
-                    })))
+                    ]
                 }
             },
-            "size": 50,
+            "size": 100,
             "sort": [{ "date_published": "desc" }],
-            "include": ["lens_id", "title", "abstract", "date_published", "parties", "biblio"]
+            // ✅ Fixed: removed invalid top-level fields "title" and "parties"
+            "include": [
+                "lens_id",
+                "date_published",
+                "abstract.text",
+                "biblio.invention_title.text",
+                "biblio.publication_reference",
+                "biblio.parties.applicants",
+                "biblio.parties.inventors"
+            ]
         };
 
         const apiUrl = new URL(LENS_API_URL);
         apiUrl.pathname = '/patent/search';
+
+        console.log('API URL:', apiUrl.toString());
+        console.log('Request Body:', JSON.stringify(requestBody, null, 2));
 
         const config = {
             headers: {
@@ -125,20 +151,47 @@ export async function fetchPatentsForKeywords(keywords) {
 
         const response = await axios.post(apiUrl.toString(), requestBody, config);
         
+        console.log('=== Patent Response ===');
+        console.log('Status:', response.status);
+        console.log('Total patents found:', response.data?.total || 0);
+        console.log('Patents returned:', response.data?.data?.length || 0);
+        
         if (response.data && response.data.data) {
-            allPatents.push(...response.data.data.map(patent => ({
-                id: patent.lens_id,
-                title: patent.title || "No title",
-                abstract: patent.abstract?.[0]?.text || patent.abstract || "No abstract",
-                publishDate: patent.date_published,
-                applicants: patent.parties?.applicants?.map(a => a.name).join(", ") || "Unknown",
-                inventors: patent.parties?.inventors?.map(i => i.name).join(", ") || "Unknown",
-                jurisdiction: patent.biblio?.jurisdiction || "Unknown",
-                relevanceScore: calculateRelevance({ title: patent.title, text: patent.abstract }, keywords)
-            })));
+            allPatents.push(...response.data.data.map(patent => {
+                const title = patent.biblio?.invention_title?.[0]?.text || "No title";
+                const abstractText = patent.abstract?.[0]?.text || "No abstract";
+
+                const applicants = (patent.biblio?.parties?.applicants || [])
+                    .map(a => a.extracted_name || a.name || "")
+                    .filter(Boolean)
+                    .join(", ") || "Unknown";
+
+                const inventors = (patent.biblio?.parties?.inventors || [])
+                    .map(i => i.extracted_name || i.name || "")
+                    .filter(Boolean)
+                    .join(", ") || "Unknown";
+
+                const jurisdiction = patent.biblio?.publication_reference?.jurisdiction || "Unknown";
+
+                return {
+                    id: patent.lens_id,
+                    title,
+                    abstract: abstractText,
+                    publishDate: patent.date_published,
+                    applicants,
+                    inventors,
+                    jurisdiction,
+                    relevanceScore: calculateRelevance({ title, text: abstractText }, keywords)
+                };
+            }));
         }
     } catch (error) {
-        console.error("Error fetching patents:", error.message);
+        console.error("=== Patent Fetch Error ===");
+        console.error("Error message:", error.message);
+        if (error.response) {
+            console.error("Status:", error.response.status);
+            console.error("Response data:", JSON.stringify(error.response.data, null, 2));
+        }
     }
 
     return allPatents.sort((a, b) => b.relevanceScore - a.relevanceScore);
@@ -170,7 +223,7 @@ export async function performAdvancedAnalysis(data) {
             date: a.publish_date,
             summary: a.summary?.substring(0, 200)
         })),
-        recentPatents: data.patents.slice(0, 30).map(p => ({
+        recentPatents: data.patents.slice(0, 200).map(p => ({
             title: p.title,
             date: p.publishDate,
             abstract: p.abstract?.substring(0, 200)
