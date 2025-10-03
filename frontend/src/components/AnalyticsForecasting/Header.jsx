@@ -113,13 +113,13 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
   const displaySuggestions = topic.trim() ? filteredSuggestions : searchSuggestions.slice(0, 8);
 
   return (
-    <div className="bg-white border-b sticky top-0 z-10">
+    <div className="bg-slate-800/50 backdrop-blur-sm border-b border-blue-800/30 sticky top-0 z-10">
       <div className="max-w-7xl mx-auto px-4 py-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Advanced Analytics & Forecasting</h1>
+        <h1 className="text-2xl font-bold text-blue-400 mb-4">Advanced Analytics & Forecasting</h1>
 
         <div className="flex gap-2">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-3 h-5 w-5 text-blue-300" />
             <input
               type="text"
               value={topic}
@@ -130,7 +130,7 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
               onFocus={() => setShowSuggestions(true)}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
               placeholder="Enter technology topic (e.g., Quantum Computing, AI in Healthcare)"
-              className="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full pl-10 pr-10 py-2 bg-slate-700/50 border border-blue-800/30 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none text-white placeholder-blue-200 backdrop-blur-sm"
             />
             
             {/* Toggle suggestions button */}
@@ -138,7 +138,7 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
               <button
                 type="button"
                 onClick={() => setShowSuggestions(!showSuggestions)}
-                className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-3 text-blue-300 hover:text-blue-400"
               >
                 {showSuggestions ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               </button>
@@ -146,9 +146,9 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
 
             {/* Search suggestions dropdown */}
             {showSuggestions && displaySuggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto z-20">
+              <div className="absolute top-full left-0 right-0 bg-slate-800 border border-blue-800/30 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto z-20 backdrop-blur-sm">
                 <div className="p-2">
-                  <div className="text-xs font-semibold text-gray-500 px-2 py-1">
+                  <div className="text-xs font-semibold text-blue-300 px-2 py-1">
                     {topic.trim() ? 'Matching Topics' : 'Popular Topics'}
                   </div>
                   {displaySuggestions.map((suggestion, index) => (
@@ -156,7 +156,7 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
                       key={index}
                       type="button"
                       onClick={() => handleSuggestionClick(suggestion)}
-                      className="w-full text-left px-4 py-2 hover:bg-blue-50 rounded-md text-sm text-gray-700 hover:text-blue-700 transition-colors"
+                      className="w-full text-left px-4 py-2 hover:bg-blue-600/30 rounded-md text-sm text-blue-100 hover:text-white transition-colors"
                     >
                       {suggestion}
                     </button>
@@ -164,7 +164,7 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
                   
                   {/* Show more indicator */}
                   {!topic.trim() && searchSuggestions.length > 8 && (
-                    <div className="text-xs text-gray-400 px-4 py-2 border-t mt-2">
+                    <div className="text-xs text-blue-300 px-4 py-2 border-t border-blue-800/30 mt-2">
                       Type to see more topics...
                     </div>
                   )}
@@ -176,7 +176,7 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
           <button
             onClick={handleSearch}
             disabled={loading || !topic.trim()}
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
           >
             {loading ? (
               <>
@@ -194,14 +194,14 @@ const Header = ({ topic, setTopic, loading, handleSearch }) => {
 
         {/* Quick search chips */}
         <div className="mt-3">
-          <div className="text-xs font-semibold text-gray-500 mb-2">Quick searches:</div>
+          <div className="text-xs font-semibold text-blue-300 mb-2">Quick searches:</div>
           <div className="flex flex-wrap gap-2">
             {searchSuggestions.slice(0, 6).map((suggestion, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full text-xs font-medium transition-colors"
+                className="px-3 py-1 bg-slate-700/50 hover:bg-blue-600/40 text-blue-200 rounded-full text-xs font-medium transition-colors backdrop-blur-sm border border-blue-800/30"
               >
                 {suggestion}
               </button>

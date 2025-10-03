@@ -12,12 +12,12 @@ const MarketSizeChart = ({ data }) => {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={marketData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="year" />
-        <YAxis label={{ value: 'Market Size ($B)', angle: -90, position: 'insideLeft' }} />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="value" name="Market Size ($B)" fill="#8b5cf6" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+        <XAxis dataKey="year" stroke="#9CA3AF" />
+        <YAxis stroke="#9CA3AF" label={{ value: 'Market Size ($B)', angle: -90, position: 'insideLeft', fill: '#9CA3AF' }} />
+        <Tooltip contentStyle={{ backgroundColor: '#1E293B', border: '1px solid #3B82F6', borderRadius: '8px', color: '#E5E7EB' }} />
+        <Legend wrapperStyle={{ color: '#E5E7EB' }} />
+        <Bar dataKey="value" name="Market Size ($B)" fill="#8B5CF6" />
       </BarChart>
     </ResponsiveContainer>
   );

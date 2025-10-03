@@ -27,9 +27,10 @@ function App() {
           {/* Page content */}
           <main className="flex-1 overflow-y-auto ">
             <Routes>
+              <Route path="/dashboard" element={<Home />} />
               <Route path="/" element={<Home />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/technology-intelligence" element={<TechnologyIntelligence />} />
+              <Route path="/technology-intelligence" element={<DashboardPage />} />
+              {/* <Route path="/technology-intelligence" element={<TechnologyIntelligence />} /> */}
               <Route path="/analytics" element={<AnalyticsForecasting />} />
               <Route path="/patents" element={<PatentAnalysis />} />
               <Route path="/publications" element={<ResearchPublications />} />

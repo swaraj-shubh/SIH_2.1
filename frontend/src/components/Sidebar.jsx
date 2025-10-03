@@ -10,7 +10,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { name: 'Analytics & Forecasting', href: '/analytics', icon: '📈' },
     { name: 'Patent Analysis', href: '/patents', icon: '📑' },
     { name: 'Research Publications', href: '/publications', icon: '📚' },
-    { name: 'Settings', href: '/settings', icon: '⚙️' },
+    // { name: 'Settings', href: '/settings', icon: '⚙️' },
   ];
 
   return (
