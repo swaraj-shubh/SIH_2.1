@@ -13,11 +13,19 @@ import {
     getHealth 
 } from "../controllers/cacheController.js";
 import { getPatentsByBatch } from '../controllers/patentController.js';
+import { 
+    searchAndAnalyzeTopic, 
+    getAnalysisHistory 
+} from '../controllers/advancedAnalyticsController.js';
 
 
 const router = express.Router();
 // Patents routes
 router.get('/patents/:batch', getPatentsByBatch);
+
+// Advanced Analytics routes
+router.post('/advanced-analytics/search', searchAndAnalyzeTopic);
+router.get('/advanced-analytics/history', getAnalysisHistory);
 
 // Health check
 router.get("/health", getHealth);
@@ -45,7 +53,9 @@ router.use((req, res) => {
             "GET /api/classified-news",
             "GET /api/news-articles?category=<category>&limit=<number>",
             "GET /api/analysis-status",
-            "DELETE /api/cache"
+            "DELETE /api/cache",
+            "POST /api/advanced-analytics",
+            "GET /api/advanced-analytics/history"
         ]
     });
 });
