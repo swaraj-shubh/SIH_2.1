@@ -3,15 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import DashboardPage from './pages/TestDashboard';
-import Dashboard from './pages/Dashboard';
+// import Dashboard from './pages/Dashboard';
 import TechnologyIntelligence from './pages/TechnologyIntelligence';
 import AnalyticsForecasting from './pages/AnalyticsForecasting';
 import PatentAnalysis from './pages/PatentAnalysis';
 import ResearchPublications from './pages/ResearchPublications';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
-import TechIntelligenceDashboard from './pages/TestDashboardBase';
-import TestAPI from './pages/TestAPI';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -34,11 +32,10 @@ function App() {
               <Route path="/technology-intelligence" element={<TechnologyIntelligence />} />
               <Route path="/analytics" element={<AnalyticsForecasting />} />
               <Route path="/patents" element={<PatentAnalysis />} />
-              <Route path="/dashboardold" element={<Dashboard />} />
               <Route path="/publications" element={<ResearchPublications />} />
-              <Route path="/dashboardBase" element={<TechIntelligenceDashboard />} />
               <Route path="/settings" element={<Settings />} />
-              <Route path="/test-api" element={<TestAPI />} />
+              {/* <Route path="/dashboardold" element={<Dashboard />} /> */}
+              {/* <Route path="/test-api" element={<AnalyticsForecastingold />} /> */}
             </Routes>
           </main>
         </div>
