@@ -4,8 +4,8 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 const HypeCycleChart = ({ data }) => {
   if (!data?.hypeCycle) {
     return (
-      <div className="flex items-center justify-center h-[300px] bg-gray-50 rounded-lg">
-        <p className="text-gray-500">Insufficient data for Hype Cycle analysis</p>
+      <div className="flex items-center justify-center h-[300px] bg-slate-800/40 backdrop-blur-sm rounded-lg border border-blue-500/30">
+        <p className="text-blue-300">Insufficient data for Hype Cycle analysis</p>
       </div>
     );
   }
@@ -67,40 +67,42 @@ const HypeCycleChart = ({ data }) => {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-blue-50 p-3 rounded">
-          <p className="text-xs text-gray-600">Current Phase</p>
-          <p className="text-sm font-bold text-blue-700">{data.hypeCycle.currentPhase}</p>
+        <div className="bg-blue-500/20 p-3 rounded border border-blue-500/30 backdrop-blur-sm">
+          <p className="text-xs text-blue-300">Current Phase</p>
+          <p className="text-sm font-bold text-blue-400">{data.hypeCycle.currentPhase}</p>
         </div>
-        <div className="bg-green-50 p-3 rounded">
-          <p className="text-xs text-gray-600">Time to Mainstream</p>
-          <p className="text-sm font-bold text-green-700">{data.hypeCycle.timeToMainstream}</p>
+        <div className="bg-green-500/20 p-3 rounded border border-green-500/30 backdrop-blur-sm">
+          <p className="text-xs text-green-300">Time to Mainstream</p>
+          <p className="text-sm font-bold text-green-400">{data.hypeCycle.timeToMainstream}</p>
         </div>
-        <div className="bg-purple-50 p-3 rounded">
-          <p className="text-xs text-gray-600">Visibility Score</p>
-          <p className="text-sm font-bold text-purple-700">{data.hypeCycle.visibility}%</p>
+        <div className="bg-purple-500/20 p-3 rounded border border-purple-500/30 backdrop-blur-sm">
+          <p className="text-xs text-purple-300">Visibility Score</p>
+          <p className="text-sm font-bold text-purple-400">{data.hypeCycle.visibility}%</p>
         </div>
-        <div className="bg-orange-50 p-3 rounded">
-          <p className="text-xs text-gray-600">Maturity Score</p>
-          <p className="text-sm font-bold text-orange-700">{data.hypeCycle.maturity}%</p>
+        <div className="bg-orange-500/20 p-3 rounded border border-orange-500/30 backdrop-blur-sm">
+          <p className="text-xs text-orange-300">Maturity Score</p>
+          <p className="text-sm font-bold text-orange-400">{data.hypeCycle.maturity}%</p>
         </div>
       </div>
 
       <ResponsiveContainer width="100%" height={350}>
         <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
           <XAxis 
             type="number" 
             dataKey="x" 
             domain={[0, 100]} 
-            label={{ value: 'Time / Maturity →', position: 'bottom', offset: 0 }}
-            tick={{ fontSize: 11 }}
+            label={{ value: 'Time / Maturity →', position: 'bottom', offset: 0, fill: '#9CA3AF' }}
+            tick={{ fontSize: 11, fill: '#9CA3AF' }}
+            stroke="#9CA3AF"
           />
           <YAxis 
             type="number" 
             dataKey="y" 
             domain={[0, 100]} 
-            label={{ value: 'Visibility / Expectations →', angle: -90, position: 'insideLeft' }}
-            tick={{ fontSize: 11 }}
+            label={{ value: 'Visibility / Expectations →', angle: -90, position: 'insideLeft', fill: '#9CA3AF' }}
+            tick={{ fontSize: 11, fill: '#9CA3AF' }}
+            stroke="#9CA3AF"
           />
           <ZAxis range={[100, 400]} />
           <Tooltip 
@@ -110,12 +112,12 @@ const HypeCycleChart = ({ data }) => {
                 // Fixed: Add safety check for point.name
                 const displayName = point.name ? point.name.replace('\n', ' ') : 'Location';
                 return (
-                  <div className="bg-white p-3 border rounded shadow-lg max-w-xs">
-                    <p className="font-semibold text-gray-800">{displayName}</p>
+                  <div className="bg-slate-800 border border-blue-500/30 p-3 rounded shadow-lg max-w-xs backdrop-blur-sm">
+                    <p className="font-semibold text-white">{displayName}</p>
                     {point.visibility !== undefined && (
                       <>
-                        <p className="text-xs text-blue-600 mt-1">Visibility: {point.visibility}%</p>
-                        <p className="text-xs text-orange-600">Maturity: {point.maturity}%</p>
+                        <p className="text-xs text-blue-400 mt-1">Visibility: {point.visibility}%</p>
+                        <p className="text-xs text-orange-400">Maturity: {point.maturity}%</p>
                       </>
                     )}
                   </div>
@@ -129,32 +131,32 @@ const HypeCycleChart = ({ data }) => {
           <Scatter 
             data={curvePoints} 
             fill="none" 
-            line={{ stroke: '#cbd5e1', strokeWidth: 2 }}
+            line={{ stroke: '#4B5563', strokeWidth: 2 }}
             shape={() => null}
             isAnimationActive={false}
           />
           
           {/* Phase markers */}
-          <Scatter data={phases} fill="#94a3b8" shape="circle">
+          <Scatter data={phases} fill="#6B7280" shape="circle">
             {phases.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill="#94a3b8" />
+              <Cell key={`cell-${index}`} fill="#6B7280" />
             ))}
           </Scatter>
           
           {/* Current position - larger and colored */}
           <Scatter 
             data={[currentPosition]} 
-            fill="#ef4444" 
+            fill="#EF4444" 
             shape="circle"
           >
-            <Cell fill="#ef4444" />
+            <Cell fill="#EF4444" />
           </Scatter>
         </ScatterChart>
       </ResponsiveContainer>
       
-      <div className="text-xs text-gray-600 bg-blue-50 p-3 rounded">
-        <p><strong>Analysis:</strong> {data.hypeCycle.analysis}</p>
-        <p className="mt-1"><strong>Methodology:</strong> Position calculated from news volume trends (visibility) and patent/commercial activity (maturity)</p>
+      <div className="text-xs text-blue-300 bg-slate-800/40 p-3 rounded border border-blue-500/30 backdrop-blur-sm">
+        <p><strong className="text-blue-400">Analysis:</strong> {data.hypeCycle.analysis}</p>
+        <p className="mt-1"><strong className="text-blue-400">Methodology:</strong> Position calculated from news volume trends (visibility) and patent/commercial activity (maturity)</p>
       </div>
     </div>
   );
