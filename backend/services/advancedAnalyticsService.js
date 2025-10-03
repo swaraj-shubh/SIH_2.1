@@ -1,7 +1,7 @@
 // backend/services/advancedAnalyticsService.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
-import { GEMINI_API_KEY, WORLD_NEWS_API_KEY, LENS_API_KEY, LENS_API_URL } from "../config/index.js";
+import { GEMINI_API_KEY, WORLD_NEWS_API_KEY, LENS_API_KEY, LENS_API_URL, GUARDIAN_API_KEY } from "../config/index.js";
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
@@ -39,6 +39,92 @@ Focus on:
     }
 }
 
+/**
+ * Helper function to format dates for The Guardian API (YYYY-MM-DD)
+ */
+const formatDateForGuardian = (date) => {
+    return date.toISOString().split('T')[0];
+};
+
+/**
+ * Fetch news articles from The Guardian API for given keywords
+ */
+export async function fetchGuardianNews(keywords) {
+    const allArticles = [];
+    const maxPerKeyword = 150; // Fetch up to 10 articles per keyword
+    
+    // Date range: last 1 year
+    const now = new Date();
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(now.getFullYear() - 1);
+    
+    const toDate = formatDateForGuardian(now);
+    const fromDate = formatDateForGuardian(oneYearAgo);
+
+    console.log(`📰 Fetching Guardian articles from ${fromDate} to ${toDate}`);
+
+    // Process first 5 keywords to avoid rate limits
+    for (const keyword of keywords.slice(0, 20)) {
+        try {
+            console.log(`   Searching Guardian for: "${keyword}"`);
+            
+            const params = {
+                'q': keyword,
+                'from-date': fromDate,
+                'to-date': toDate,
+                'page-size': maxPerKeyword,
+                'show-fields': 'bodyText,trailText,thumbnail',
+                'order-by': 'newest',
+                'api-key': GUARDIAN_API_KEY
+            };
+
+            const url = new URL("https://content.guardianapis.com/search");
+            url.search = new URLSearchParams(params).toString();
+
+            const response = await axios.get(url.toString(), {
+                timeout: 10000
+            });
+
+            if (response.data?.response?.results) {
+                const articles = response.data.response.results;
+                
+                allArticles.push(...articles.map(article => ({
+                    id: article.id,
+                    title: article.webTitle,
+                    summary: article.fields?.trailText || article.fields?.bodyText?.substring(0, 300) || "",
+                    text: article.fields?.bodyText || "",
+                    url: article.webUrl,
+                    image: article.fields?.thumbnail || null,
+                    publish_date: article.webPublicationDate,
+                    author: "The Guardian",
+                    source: "The Guardian",
+                    section: article.sectionName,
+                    relevanceScore: calculateRelevance(article, keywords)
+                })));
+                
+                console.log(`   ✓ Found ${articles.length} articles for "${keyword}"`);
+            }
+
+            // Polite delay between requests (500ms)
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+        } catch (error) {
+            console.error(`Error fetching Guardian news for "${keyword}":`, error.message);
+            // Continue with next keyword on error
+        }
+    }
+
+    // Deduplicate by title
+    const unique = Array.from(new Map(allArticles.map(a => [a.title, a])).values());
+    
+    console.log(`📰 Guardian: Found ${allArticles.length} total, ${unique.length} unique articles`);
+    
+    return unique.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+}
+
+/**
+ * Fetch news from WorldNewsAPI (existing function)
+ */
 export async function fetchNewsForKeywords(keywords) {
     const allArticles = [];
     const maxPerKeyword = 5;
@@ -79,6 +165,43 @@ export async function fetchNewsForKeywords(keywords) {
 
     const unique = Array.from(new Map(allArticles.map(a => [a.title, a])).values());
     return unique.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
+}
+
+/**
+ * Combined news fetching function - fetches from both sources
+ */
+export async function fetchAllNews(keywords) {
+    console.log("📰 Fetching news from multiple sources...");
+    
+    const [worldNews, guardianNews] = await Promise.allSettled([
+        fetchNewsForKeywords(keywords),
+        fetchGuardianNews(keywords)
+    ]);
+
+    const allArticles = [];
+    
+    if (worldNews.status === 'fulfilled') {
+        allArticles.push(...worldNews.value);
+        console.log(`✓ WorldNewsAPI: ${worldNews.value.length} articles`);
+    } else {
+        console.error("✗ WorldNewsAPI failed:", worldNews.reason?.message);
+    }
+    
+    if (guardianNews.status === 'fulfilled') {
+        allArticles.push(...guardianNews.value);
+        console.log(`✓ The Guardian: ${guardianNews.value.length} articles`);
+    } else {
+        console.error("✗ The Guardian failed:", guardianNews.reason?.message);
+    }
+
+    // Final deduplication across both sources (by title)
+    const uniqueArticles = Array.from(
+        new Map(allArticles.map(a => [a.title.toLowerCase(), a])).values()
+    );
+
+    console.log(`📰 Total unique articles: ${uniqueArticles.length}`);
+    
+    return uniqueArticles.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date));
 }
 
 export async function fetchPatentsForKeywords(keywords) {
@@ -123,7 +246,6 @@ export async function fetchPatentsForKeywords(keywords) {
             },
             "size": 100,
             "sort": [{ "date_published": "desc" }],
-            // ✅ Fixed: removed invalid top-level fields "title" and "parties"
             "include": [
                 "lens_id",
                 "date_published",
@@ -139,7 +261,6 @@ export async function fetchPatentsForKeywords(keywords) {
         apiUrl.pathname = '/patent/search';
 
         console.log('API URL:', apiUrl.toString());
-        console.log('Request Body:', JSON.stringify(requestBody, null, 2));
 
         const config = {
             headers: {
@@ -198,13 +319,16 @@ export async function fetchPatentsForKeywords(keywords) {
 }
 
 function calculateRelevance(item, keywords) {
-    const text = `${item.title} ${item.summary || item.text || ""}`.toLowerCase();
+    const title = item.title || item.webTitle || "";
+    const text = item.text || item.summary || item.fields?.bodyText || "";
+    const combinedText = `${title} ${text}`.toLowerCase();
+    
     let score = 0;
     
     keywords.forEach(keyword => {
         const kw = keyword.toLowerCase();
-        const titleMatches = (item.title?.toLowerCase().match(new RegExp(kw, 'g')) || []).length;
-        const textMatches = (text.match(new RegExp(kw, 'g')) || []).length;
+        const titleMatches = (title.toLowerCase().match(new RegExp(kw, 'g')) || []).length;
+        const textMatches = (combinedText.match(new RegExp(kw, 'g')) || []).length;
         
         score += titleMatches * 3 + textMatches;
     });
@@ -221,7 +345,8 @@ export async function performAdvancedAnalysis(data) {
         recentNews: data.newsArticles.slice(0, 30).map(a => ({
             title: a.title,
             date: a.publish_date,
-            summary: a.summary?.substring(0, 200)
+            summary: a.summary?.substring(0, 200),
+            source: a.source
         })),
         recentPatents: data.patents.slice(0, 200).map(p => ({
             title: p.title,

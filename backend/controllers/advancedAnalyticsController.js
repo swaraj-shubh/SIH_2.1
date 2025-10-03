@@ -1,7 +1,7 @@
 // backend/controllers/advancedAnalyticsController.js
 import { 
     generateRelatedKeywords,
-    fetchNewsForKeywords,
+    fetchAllNews,  // Updated: now fetches from both sources
     fetchPatentsForKeywords,
     performAdvancedAnalysis 
 } from "../services/advancedAnalyticsService.js";
@@ -38,10 +38,10 @@ export const searchAndAnalyzeTopic = async (req, res) => {
         const keywords = await generateRelatedKeywords(topic);
         console.log(`✅ Generated ${keywords.length} keywords:`, keywords);
 
-        // Step 2: Fetch news articles
-        console.log("📰 Fetching news articles...");
-        const newsArticles = await fetchNewsForKeywords([topic, ...keywords]);
-        console.log(`✅ Fetched ${newsArticles.length} news articles`);
+        // Step 2: Fetch news articles from both WorldNewsAPI and The Guardian
+        console.log("📰 Fetching news articles from multiple sources...");
+        const newsArticles = await fetchAllNews([topic, ...keywords]);
+        console.log(`✅ Fetched ${newsArticles.length} total news articles`);
 
         // Step 3: Fetch patents
         console.log("📜 Fetching patents...");
