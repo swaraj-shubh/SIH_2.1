@@ -2,6 +2,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import axios from "axios";
 import { GEMINI_API_KEY, WORLD_NEWS_API_KEY, LENS_API_KEY, LENS_API_URL, GUARDIAN_API_KEY } from "../config/index.js";
+import { 
+    calculateSCurveData, 
+    calculateHypeCyclePosition, 
+    calculateTRLProgression 
+} from "../utils/analyticsCalculator.js";
 
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
@@ -51,7 +56,7 @@ const formatDateForGuardian = (date) => {
  */
 export async function fetchGuardianNews(keywords) {
     const allArticles = [];
-    const maxPerKeyword = 150; // Fetch up to 10 articles per keyword
+    const maxPerKeyword = 200; // Fetch up to 10 articles per keyword
     
     // Date range: last 1 year
     const now = new Date();
@@ -64,7 +69,7 @@ export async function fetchGuardianNews(keywords) {
     console.log(`📰 Fetching Guardian articles from ${fromDate} to ${toDate}`);
 
     // Process first 5 keywords to avoid rate limits
-    for (const keyword of keywords.slice(0, 20)) {
+    for (const keyword of keywords.slice(0, 10)) {
         try {
             console.log(`   Searching Guardian for: "${keyword}"`);
             
@@ -342,7 +347,7 @@ export async function performAdvancedAnalysis(data) {
     const analysisData = {
         topic: data.topic,
         keywords: data.keywords,
-        recentNews: data.newsArticles.slice(0, 30).map(a => ({
+        recentNews: data.newsArticles.slice(0, 1000).map(a => ({
             title: a.title,
             date: a.publish_date,
             summary: a.summary?.substring(0, 200),
