@@ -12,8 +12,12 @@ import {
     clearCache, 
     getHealth 
 } from "../controllers/cacheController.js";
+import { getPatentsByBatch } from '../controllers/patentController.js';
+
 
 const router = express.Router();
+// Patents routes
+router.get('/patents/:batch', getPatentsByBatch);
 
 // Health check
 router.get("/health", getHealth);

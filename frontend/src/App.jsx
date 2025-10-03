@@ -11,6 +11,7 @@ import ResearchPublications from './pages/ResearchPublications';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
 import TechIntelligenceDashboard from './pages/TestDashboardBase';
+import TestAPI from './pages/TestAPI';
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -37,6 +38,7 @@ function App() {
               <Route path="/publications" element={<ResearchPublications />} />
               <Route path="/dashboardBase" element={<TechIntelligenceDashboard />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/test-api" element={<TestAPI />} />
             </Routes>
           </main>
         </div>
