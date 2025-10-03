@@ -13,7 +13,7 @@ const OverviewTab = ({ data }) => {
           TRL Progression Tracking
         </h3>
         <TRLProgressionChart data={data.analysis} />
-        <div className="mt-4 p-4 bg-slate-800/40 backdrop-blur-sm rounded border border-blue-500/30">
+        {/* <div className="mt-4 p-4 bg-slate-800/40 backdrop-blur-sm rounded border border-blue-500/30">
           <h4 className="font-semibold text-sm mb-2 text-blue-300">Evidence</h4>
           <ul className="space-y-1">
             {(data.analysis?.trlProgression?.evidence ?? []).map((ev, i) => (
@@ -23,7 +23,7 @@ const OverviewTab = ({ data }) => {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -33,7 +33,7 @@ const OverviewTab = ({ data }) => {
             S-Curve Analysis
           </h3>
           <SCurveChart data={data.analysis} />
-          <p className="text-sm text-blue-300 mt-2">{data.analysis?.sCurveData?.analysis}</p>
+          {/* <p className="text-sm text-blue-300 mt-2">{data.analysis?.sCurveData?.analysis}</p> */}
         </div>
 
         <div>

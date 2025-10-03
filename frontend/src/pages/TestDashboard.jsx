@@ -254,7 +254,7 @@ const TechIntelligenceDashboard = () => {
 
       {data && (
         <>
-          <StatsOverview data={data} />
+          {/* <StatsOverview data={data} /> */}
           
           <div className="grid grid-cols-3 gap-6 mb-6">
             <TrendingTopics data={data} />

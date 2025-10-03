@@ -141,7 +141,7 @@ const TRLProgressionChart = ({ data }) => {
       </div>
 
       {/* Evidence Details */}
-      {evidence.length > 0 && (
+      {/* {evidence.length > 0 && (
         <div className="text-xs text-blue-300 bg-slate-800/40 p-3 rounded border border-blue-500/30 backdrop-blur-sm">
           <p className="font-semibold text-blue-400 mb-2">Evidence from Analysis:</p>
           <ul className="space-y-1">
@@ -153,7 +153,7 @@ const TRLProgressionChart = ({ data }) => {
             ))}
           </ul>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

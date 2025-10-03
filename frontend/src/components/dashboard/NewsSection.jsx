@@ -95,8 +95,7 @@ const NewsSection = ({
           {newsArticles.map((article, idx) => (
             <div
               key={article.id || idx}
-              onClick={() => openArticle(article.url)}
-              className="bg-gradient-to-br from-slate-700/70 to-slate-700/30 rounded-lg p-4 border border-slate-600 hover:border-blue-500 transition-all cursor-pointer group h-fit"
+              className="bg-gradient-to-br from-slate-700/70 to-slate-700/30 rounded-lg p-4 border border-slate-600 hover:border-blue-500 transition-all group h-fit"
             >
               <div className="flex items-center gap-2 mb-3">
                 <span className={`text-xs px-2 py-0.5 rounded font-medium ${
@@ -111,30 +110,40 @@ const NewsSection = ({
                 </span>
               </div>
               
-              <h4 className="font-semibold text-sm mb-2 line-clamp-2 group-hover:text-blue-400 transition-colors">
+              <h4 className="font-semibold text-sm mb-2 line-clamp-2">
                 {article.title}
               </h4>
               
-              <p className="text-xs text-slate-400 mb-3 line-clamp-4">
-                {article.summary}
-              </p>
-              
-              {article.query && (
-                <div className="mb-3 text-xs">
-                  <span className="text-slate-500">Topic: </span>
-                  <span className="text-cyan-400">{article.query}</span>
+              <details className="group/details">
+                <summary className="cursor-pointer text-xs text-blue-400 hover:text-blue-300 font-medium mb-2 list-none">
+                  View Details ›
+                </summary>
+                <div className="mt-2 space-y-2">
+                  <p className="text-xs text-slate-400">
+                    {article.summary}
+                  </p>
+                  
+                  {article.query && (
+                    <div className="text-xs">
+                      <span className="text-slate-500">Topic: </span>
+                      <span className="text-cyan-400">{article.query}</span>
+                    </div>
+                  )}
                 </div>
-              )}
+              </details>
               
-              <div className="flex items-center justify-between text-xs text-slate-500">
+              <div className="flex items-center justify-between text-xs text-slate-500 mt-3">
                 <div className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   <span>{formatDate(article.publish_date)}</span>
                 </div>
-                <div className="flex items-center gap-1 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button 
+                  onClick={() => openArticle(article.url)}
+                  className="flex items-center gap-1 text-blue-400 hover:text-blue-300 transition-colors"
+                >
                   <span>Read More</span>
                   <ExternalLink className="w-3 h-3" />
-                </div>
+                </button>
               </div>
               
               {article.author && article.author !== 'Unknown' && (
