@@ -1,315 +1,164 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { 
-  Telescope, 
-  BarChart3, 
-  FileText, 
-  BookOpen,
-  Shield,
-  Cpu,
-  TrendingUp,
-  Database,
-  Target,
-  Zap,
-  Users,
-  Globe
+  Shield, 
+  TrendingUp, 
+  Globe, 
+  Cpu, 
+  BookOpen, 
+  ArrowRight,
+  BarChart3,
+  AlertTriangle,
+  Users
 } from 'lucide-react';
 
-const Home = () => {
+const DRDOIntroHomepage = () => {
   const features = [
     {
-      icon: <Database className="h-8 w-8" />,
-      title: "Unified Data Aggregation",
-      description: "Integrate data from patents, research publications, industry reports, and market trends in one platform"
+      icon: Globe,
+      title: "Global Tech Monitoring",
+      description: "Track emerging technologies and research worldwide in real-time"
     },
     {
-      icon: <BarChart3 className="h-8 w-8" />,
-      title: "AI-Powered Forecasting",
-      description: "Advanced analytics for TRL progression, S-curve analysis, and technology convergence detection"
+      icon: Cpu,
+      title: "AI-Powered Analysis",
+      description: "Advanced algorithms analyze technology trends and threats"
     },
     {
-      icon: <Zap className="h-8 w-8" />,
-      title: "Real-time Intelligence",
-      description: "Continuous monitoring and instant updates on emerging technologies and market shifts"
+      icon: BarChart3,
+      title: "Strategic Intelligence",
+      description: "Comprehensive insights for defense planning and decision making"
     },
     {
-      icon: <Target className="h-8 w-8" />,
-      title: "Strategic Decision Support",
-      description: "Data-driven insights for technology adoption, development, and investment decisions"
-    },
-    {
-      icon: <Globe className="h-8 w-8" />,
-      title: "Global Technology Scouting",
-      description: "Comprehensive coverage of international patents, research, and industry developments"
-    },
-    {
-      icon: <TrendingUp className="h-8 w-8" />,
-      title: "Market Intelligence",
-      description: "Track market size, growth trends, and competitive landscape analysis"
+      icon: AlertTriangle,
+      title: "Threat Detection",
+      description: "Early warning system for potential security risks and vulnerabilities"
     }
   ];
 
-  const capabilities = [
-    {
-      title: "Patent Analysis",
-      icon: <FileText className="h-6 w-6" />,
-      description: "Comprehensive patent mapping and trend analysis across global databases"
-    },
-    {
-      title: "Research Intelligence",
-      icon: <BookOpen className="h-6 w-6" />,
-      description: "Academic publication tracking and citation analysis for breakthrough detection"
-    },
-    {
-      title: "Technology Forecasting",
-      icon: <TrendingUp className="h-6 w-6" />,
-      description: "Predictive modeling for technology readiness levels and market adoption"
-    },
-    {
-      title: "Competitive Analysis",
-      icon: <Users className="h-6 w-6" />,
-      description: "Monitor competitor activities, investments, and technology portfolios"
-    }
+  const quickStats = [
+    { number: "45+", label: "Countries Monitored" },
+    { number: "28", label: "Technology Domains" },
+    { number: "150+", label: "Daily Analysis" },
+    { number: "12", label: "Active Alerts" }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-2xl">
-                <Shield className="h-12 w-12 text-blue-600 dark:text-blue-400" />
-              </div>
+      <div className="container mx-auto px-6 py-16">
+        <div className="text-center mb-16">
+          <div className="flex justify-center mb-6">
+            <div className="bg-blue-600 p-4 rounded-2xl">
+              <Shield className="w-12 h-12 text-white" />
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                DRDO
-              </span>
-              <br />
-              Technology Intelligence Platform
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto leading-relaxed">
-              Transforming scattered technology intelligence into comprehensive, real-time strategic insights for national security and technological supremacy
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link
-                to="/technology-intelligence"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Explore Platform
-                <Telescope className="inline ml-2 h-5 w-5" />
-              </Link>
-              
-              <Link
-                to="/analytics"
-                className="border-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105"
-              >
-                View Analytics
-                <BarChart3 className="inline ml-2 h-5 w-5" />
-              </Link>
-            </div>
+          </div>
+          
+          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
+            DRDO Technology Intelligence Platform
+          </h1>
+          
+          <p className="text-xl text-blue-200 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Advanced monitoring and analysis system for strategic defense technology intelligence. 
+            Track global innovations, assess threats, and stay ahead in the technology landscape.
+          </p>
+          
+          <div className="flex gap-4 justify-center">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2">
+              Enter Dashboard
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button className="border border-blue-500 text-blue-400 hover:bg-blue-500/10 px-8 py-3 rounded-lg font-semibold transition-colors">
+              Learn More
+            </button>
           </div>
         </div>
-        
-        {/* Background Elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200 dark:bg-blue-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-30 animate-pulse"></div>
-          <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-indigo-200 dark:bg-indigo-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-30 animate-pulse delay-1000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-purple-200 dark:bg-purple-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-30 animate-pulse delay-500"></div>
-        </div>
-      </section>
 
-      {/* Mission Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Our Mission
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              To empower DRDO laboratories with automated, comprehensive technology intelligence 
-              and forecasting capabilities, enabling data-driven strategic decisions for national defense 
-              and technological advancement.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="bg-red-100 dark:bg-red-900 p-2 rounded-lg">
-                  <Shield className="h-6 w-6 text-red-600 dark:text-red-400" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    National Security Focus
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Dedicated to enhancing India's defense capabilities through cutting-edge 
-                    technology intelligence and strategic foresight.
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="bg-green-100 dark:bg-green-900 p-2 rounded-lg">
-                  <Cpu className="h-6 w-6 text-green-600 dark:text-green-400" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    Technological Sovereignty
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    Enabling self-reliance in critical defense technologies through comprehensive 
-                    market and competitor intelligence.
-                  </p>
-                </div>
-              </div>
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
+          {quickStats.map((stat, index) => (
+            <div key={index} className="text-center p-6 bg-slate-800/30 rounded-xl border border-blue-500/20">
+              <div className="text-3xl font-bold text-blue-400 mb-2">{stat.number}</div>
+              <div className="text-slate-400">{stat.label}</div>
             </div>
-            
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Key Objectives</h3>
-              <ul className="space-y-3">
-                <li className="flex items-center">
-                  <div className="w-2 h-2 bg-white rounded-full mr-3"></div>
-                  Automate technology scouting and intelligence gathering
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 bg-white rounded-full mr-3"></div>
-                  Provide real-time forecasting and trend analysis
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 bg-white rounded-full mr-3"></div>
-                  Enable data-driven strategic decision making
-                </li>
-                <li className="flex items-center">
-                  <div className="w-2 h-2 bg-white rounded-full mr-3"></div>
-                  Reduce technology adoption risks and timelines
-                </li>
-              </ul>
-            </div>
-          </div>
+          ))}
         </div>
-      </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Platform Capabilities
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Advanced AI-powered features designed specifically for defense technology intelligence requirements
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Features Grid */}
+        <div className="mb-20">
+          <h2 className="text-3xl font-bold text-center mb-12 text-white">
+            Comprehensive Technology Intelligence
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
-              <div 
-                key={index}
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700"
-              >
-                <div className="text-blue-600 dark:text-blue-400 mb-4">
-                  {feature.icon}
+              <div key={index} className="bg-slate-800/30 border border-blue-500/20 rounded-xl p-6 text-center hover:border-blue-400/40 transition-colors">
+                <div className="bg-blue-500/20 p-3 rounded-lg w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                  <feature.icon className="w-6 h-6 text-blue-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {feature.description}
-                </p>
+                <h3 className="font-semibold text-lg mb-3 text-white">{feature.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Capabilities Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Comprehensive Analysis Modules
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {capabilities.map((capability, index) => (
-              <div 
-                key={index}
-                className="text-center group"
-              >
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:-translate-y-2 border-2 border-transparent group-hover:border-blue-500">
-                  <div className="bg-blue-100 dark:bg-blue-900 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <div className="text-blue-600 dark:text-blue-400">
-                      {capability.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                    {capability.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
-                    {capability.description}
-                  </p>
-                </div>
+        {/* Technology Domains */}
+        <div className="bg-slate-800/30 border border-blue-500/20 rounded-2xl p-8 mb-16">
+          <h2 className="text-3xl font-bold text-center mb-8 text-white">
+            Key Technology Domains
+          </h2>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              "Quantum Computing",
+              "Artificial Intelligence", 
+              "Semiconductors",
+              "Cybersecurity",
+              "Hypersonic Systems",
+              "Biotechnology",
+              "Space Technology",
+              "Advanced Materials"
+            ].map((domain, index) => (
+              <div key={index} className="text-center p-4 bg-slate-700/20 rounded-lg hover:bg-slate-700/40 transition-colors">
+                <div className="text-blue-400 font-medium">{domain}</div>
               </div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-12 text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Transform Technology Intelligence?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Start exploring comprehensive technology insights and strategic forecasts today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/dashboard"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105"
-              >
-                Launch Dashboard
-              </Link>
-              <Link
-                to="/technology-intelligence"
-                className="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105"
-              >
-                Explore Technologies
-              </Link>
-            </div>
-          </div>
+        {/* CTA Section */}
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4 text-white">
+            Ready to Explore Strategic Intelligence?
+          </h2>
+          <p className="text-blue-200 mb-6 max-w-2xl mx-auto">
+            Access comprehensive technology analysis, threat assessments, and strategic insights 
+            for defense research and development.
+          </p>
+          <button className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-4 rounded-lg font-semibold transition-all flex items-center gap-2 mx-auto">
+            <TrendingUp className="w-5 h-5" />
+            Launch Intelligence Dashboard
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </div>
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="flex justify-center items-center mb-6">
-            <Shield className="h-8 w-8 text-blue-400 mr-3" />
-            <span className="text-xl font-bold">DRDO Technology Intelligence</span>
-          </div>
-          <p className="text-gray-400 mb-6">
-            Empowering national security through advanced technology intelligence and strategic foresight
-          </p>
-          <div className="border-t border-gray-800 pt-6">
-            <p className="text-gray-500 text-sm">
-              © 2024 Defence Research and Development Organisation. All rights reserved.
-            </p>
+      <div className="border-t border-slate-700/50 mt-20">
+        <div className="container mx-auto px-6 py-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Shield className="w-6 h-6 text-blue-400" />
+              <span className="font-semibold">DRDO Technology Intelligence</span>
+            </div>
+            <div className="text-slate-400 text-sm">
+              Strategic Defense Research & Analysis
+            </div>
           </div>
         </div>
-      </footer>
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default DRDOIntroHomepage;

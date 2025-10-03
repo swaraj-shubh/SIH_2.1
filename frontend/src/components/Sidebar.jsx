@@ -5,7 +5,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
 
   const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: '📊' },
+    { name: 'Home', href: '/dashboard', icon: '📊' },
     { name: 'Technology Intelligence', href: '/technology-intelligence', icon: '🔍' },
     { name: 'Analytics & Forecasting', href: '/analytics', icon: '📈' },
     { name: 'Patent Analysis', href: '/patents', icon: '📑' },

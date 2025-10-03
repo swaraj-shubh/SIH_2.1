@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { FileText, Users, Calendar, ExternalLink, Download, Search, Filter, BookOpen } from 'lucide-react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { FileText, Users, Calendar, ExternalLink, Download, Search, Filter,Shield, BookOpen } from 'lucide-react';
 import { ieeeData } from '../mockData/ieee';
 
 const ResearchPublications = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   const [selectedYear, setSelectedYear] = useState('all');
+  const [isLoading, setIsLoading] = useState(true); // Add this line
+  const [openItem, setOpenItem] = React.useState(ieeeData.articles[0].doi);
 
   // Extract unique years and content types for filters
   const years = ['all', ...new Set(ieeeData.articles.map(article => article.publication_year))].sort((a, b) => b - a);
@@ -28,6 +30,14 @@ const ResearchPublications = () => {
 
     return matchesSearch && matchesType && matchesYear;
   });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        setIsLoading(false);
+    }, 2000);
+
+    // Cleanup the timer if the component unmounts
+    return () => clearTimeout(timer);
+  }, []);
 
   const openInNewTab = (url) => {
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -41,6 +51,55 @@ const ResearchPublications = () => {
       default: return 'bg-slate-500/20 text-slate-300 border-slate-500/30';
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-6">
+        <div className="text-center">
+          {/* Animated Logo/Icon */}
+          <div className="relative mb-8">
+            <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Shield className="w-10 h-10 text-white" />
+            </div>
+            {/* Pulsing Ring Effect */}
+            {/* <div className="absolute inset-0 rounded-2xl border-4 border-blue-400 animate-ping opacity-20"></div> */}
+          </div>
+
+          {/* Animated Text */}
+          {/* <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent mb-4">
+            Loading Rearch Paers...
+          </h1> */}
+          
+          {/* Loading Animation */}
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent mb-4">
+            Loading IEEE Research Papers
+          </h1>
+            <div className="flex gap-1.5">
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                ></div>
+              ))}
+            </div>
+            {/* <p className="text-blue-300 font-medium">Loading Strategic Intelligence</p> */}
+          </div>
+
+          {/* Progress Bar */}
+          <div className="w-64 mx-auto bg-slate-700 rounded-full h-2 mb-2">
+            <div className="bg-gradient-to-r from-blue-500 to-cyan-400 h-2 rounded-full animate-pulse"></div>
+          </div>
+          
+          {/* Subtle Status Message */}
+          <p className="text-slate-500 text-sm">
+            have patients...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-6">
