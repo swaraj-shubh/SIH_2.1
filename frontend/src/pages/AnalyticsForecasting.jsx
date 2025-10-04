@@ -15,7 +15,7 @@ const AnalyticsForecasting = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('overview');
-
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
   const handleSearch = async () => {
     if (!topic.trim()) return;
 
@@ -23,7 +23,7 @@ const AnalyticsForecasting = () => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/advanced-analytics/search', {
+      const response = await fetch(`${API_BASE_URL}/advanced-analytics/search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic })
@@ -196,7 +196,7 @@ export default AnalyticsForecasting;
 //     setError(null);
 
 //     try {
-//       const response = await fetch('http://localhost:5000/api/advanced-analytics/search', {
+//       const response = await fetch(`${API_BASE_URL}/advanced-analytics/search`, {
 //         method: 'POST',
 //         headers: { 'Content-Type': 'application/json' },
 //         body: JSON.stringify({ topic })

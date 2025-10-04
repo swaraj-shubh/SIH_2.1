@@ -14,9 +14,9 @@ import FundingCharts from '../components/dashboard/FundingCharts';
 import ExecutiveSummary from '../components/dashboard/ExecutiveSummary';
 import Footer from '../components/dashboard/Footer';
 
-const API_BASE_URL = 'http://localhost:5000/api';
 
 const TechIntelligenceDashboard = () => {
+  const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
   const [data, setData] = useState(null);
   const [newsArticles, setNewsArticles] = useState([]);
   const [classifiedNews, setClassifiedNews] = useState(null);

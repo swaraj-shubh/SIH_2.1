@@ -15,5 +15,5 @@ if (!GEMINI_API_KEY || !WORLD_NEWS_API_KEY || !LENS_API_KEY || !LENS_API_URL || 
 }
 
 export const geminiConfig = {
-    model: "gemini-2.0-flash-exp"
+    model: "gemini-2.0-flash-exp"                                                                                                                                                                   
 };

@@ -16,16 +16,16 @@ const PatentAnalysis = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredPatents, setFilteredPatents] = useState([]);
     const [error, setError] = useState('');
-
+    const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
     const loadPatents = async (page = 1) => {
         setLoading(true);
         setError('');
         try {
             const startIndex = page * 100;
-            console.log(`Fetching patents from: http://localhost:5000/api/patents/${startIndex}`);
-            
-            const response = await fetch(`http://localhost:5000/api/patents/${startIndex}`);
-            
+            console.log(`Fetching patents from: ${API_BASE_URL}/patents/${startIndex}`);
+
+            const response = await fetch(`${API_BASE_URL}/patents/${startIndex}`);
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -625,9 +625,9 @@ const PatentAnalysis = () => {
                                     <h3 className="text-lg font-semibold text-blue-300 mb-2">
                                         Loading Patents...
                                     </h3>
-                                    <p className="text-blue-400">
-                                        Fetching data from http://localhost:5000/api/patents/{currentPage * 100}
-                                    </p>
+                                    {/* <p className="text-blue-400">
+                                        Fetching data from ${API_BASE_URL}/patents/{currentPage * 100}
+                                    </p> */}
                                 </CardContent>
                             </Card>
                         ) : filteredPatents.length > 0 ? (
@@ -767,7 +767,7 @@ const PatentAnalysis = () => {
                                         <p>• <strong>Patents loaded:</strong> {patents.length}</p>
                                         <p>• <strong>Current page:</strong> {currentPage}</p>
                                         <p>• <strong>Start index:</strong> {currentPage * 100}</p>
-                                        <p>• <strong>API endpoint:</strong> http://localhost:5000/api/patents/{currentPage * 100}</p>
+                                        {/* <p>• <strong>API endpoint:</strong> {API_BASE_URL}/patents/{currentPage * 100}</p> */}
                                     </div>
                                 </div>
                             </CardContent>
