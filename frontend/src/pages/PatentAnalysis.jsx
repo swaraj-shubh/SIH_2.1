@@ -31,7 +31,7 @@ const PatentAnalysis = () => {
             }
             
             const data = await response.json();
-            console.log('API Response received:', data);
+            // console.log('API Response received:', data);
             
             if (data && data.data) {
                 setPatents(data.data);

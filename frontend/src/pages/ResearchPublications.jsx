@@ -94,7 +94,7 @@ const ResearchPublications = () => {
           
           {/* Subtle Status Message */}
           <p className="text-slate-500 text-sm">
-            have patients...
+            have patience...
           </p>
         </div>
       </div>
