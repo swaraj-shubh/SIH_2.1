@@ -155,10 +155,6 @@ This project is a comprehensive platform designed to provide users with actionab
 ├── package.json          # Project metadata and dependencies
 ```
 
-📸 **Screenshots**
-
-(Add screenshots of the application here to showcase its features and UI)
-
 🤝 **Contributing**
 
 Contributions are welcome! Please follow these steps:
@@ -168,11 +164,6 @@ Contributions are welcome! Please follow these steps:
 3.  Make your changes and commit them with clear and concise messages.
 4.  Submit a pull request.
 
-📝 **License**
 
-This project is licensed under the [MIT License](LICENSE) - see the `LICENSE` file for details.
-
-
-If you have any questions or suggestions, please feel free to contact us at [your_email@example.com](mailto:your_email@example.com).
 
 💖 Thanks for checking out this project! We hope it helps you gain valuable insights into the world of technology.
