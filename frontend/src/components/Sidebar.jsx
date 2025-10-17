@@ -5,12 +5,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const location = useLocation();
 
   const navigation = [
-    { name: 'Home', href: '/dashboard', icon: '📊' },
+    { name: 'Home', href: '/', icon: '📊' },
     { name: 'Technology Intelligence', href: '/technology-intelligence', icon: '🔍' },
     { name: 'Analytics & Forecasting', href: '/analytics', icon: '📈' },
     { name: 'Patent Analysis', href: '/patents', icon: '📑' },
     { name: 'Research Publications', href: '/publications', icon: '📚' },
-    // { name: 'Settings', href: '/settings', icon: '⚙️' },
   ];
 
   return (
@@ -32,7 +31,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
       `}>
         <div className="flex items-center justify-center rounded-lg hover:bg-gray-700 h-16 bg-gray-900">
           <Link to="/" className="absolute left-4">
-          <h2 className="text-white text-xl font-bold">DRDO Tech Intelligence</h2>
+          <h2 className="text-white text-xl font-bold">SANGAM-AI</h2>
           </Link>
         </div>
         

@@ -8,15 +8,19 @@ import ConvergenceTab from './tabs/ConvergenceTab';
 import InsightsTab from './tabs/InsightsTab';
 import SourcesTab from './tabs/SourcesTab';
 
-const TabContent = ({ activeTab, data }) => {
+const TabContent = ({ activeTab, data, theme = 'dark' }) => {
+  // Theme-specific styles
+  const isLight = theme === 'light';
+  const background = isLight ? "bg-slate-100" : "bg-slate-800/30";
+
   return (
-    <div className="p-6 bg-slate-800/30 backdrop-blur-sm">
-      {activeTab === 'overview' && <OverviewTab data={data} />}
-      {activeTab === 'market' && <MarketTab data={data} />}
-      {activeTab === 'signals' && <SignalsTab data={data} />}
-      {activeTab === 'convergence' && <ConvergenceTab data={data} />}
-      {activeTab === 'insights' && <InsightsTab data={data} />}
-      {activeTab === 'sources' && <SourcesTab data={data} />}
+    <div className={`p-6 ${background} backdrop-blur-sm`}>
+      {activeTab === 'overview' && <OverviewTab data={data} theme={theme} />}
+      {activeTab === 'market' && <MarketTab data={data} theme={theme} />}
+      {activeTab === 'signals' && <SignalsTab data={data} theme={theme} />}
+      {activeTab === 'convergence' && <ConvergenceTab data={data} theme={theme} />}
+      {activeTab === 'insights' && <InsightsTab data={data} theme={theme} />}
+      {activeTab === 'sources' && <SourcesTab data={data} theme={theme} />}
     </div>
   );
 };
