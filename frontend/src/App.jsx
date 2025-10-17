@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import DashboardPage from './pages/TestDashboard';
+import TechIntelegence from './pages/TechIntelegence';
 import AnalyticsForecasting from './pages/AnalyticsForecasting';
 import PatentAnalysis from './pages/PatentAnalysis';
 import ResearchPublications from './pages/ResearchPublications';
@@ -26,7 +26,7 @@ function App() {
           <main className="flex-1 overflow-y-auto">
             <Routes>
               <Route path="/" element={<Home theme={theme} />} />
-              <Route path="/technology-intelligence" element={<DashboardPage theme={theme} />} />
+              <Route path="/technology-intelligence" element={<TechIntelegence theme={theme} />} />
               <Route path="/analytics" element={<AnalyticsForecasting theme={theme} />} />
               <Route path="/patents" element={<PatentAnalysis theme={theme} />} />
               <Route path="/publications" element={<ResearchPublications theme={theme} />} />

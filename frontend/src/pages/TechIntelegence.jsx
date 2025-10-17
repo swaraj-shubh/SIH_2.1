@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Loader, Database, RefreshCw } from 'lucide-react';
 
 // Import components
-import Header from '@/components/dashboard/Header';
-import StatsOverview from '../components/dashboard/StatsOverview';
-import NewsSection from '../components/dashboard/NewsSection';
-import TrendingTopics from '../components/dashboard/TrendingTopics';
-import SignalAnalysis from '../components/dashboard/SignalAnalysis';
-import MarketGrowth from '../components/dashboard/MarketGrowth';
-import EmergingTechnologies from '../components/dashboard/EmergingTechnologies';
-import KeyPlayers from '../components/dashboard/KeyPlayers';
-import FundingCharts from '../components/dashboard/FundingCharts';
-import ExecutiveSummary from '../components/dashboard/ExecutiveSummary';
-import Footer from '../components/dashboard/Footer';
+import Header from '@/components/TechIntelegence/Header';
+import StatsOverview from '../components/TechIntelegence/StatsOverview';
+import NewsSection from '../components/TechIntelegence/NewsSection';
+import TrendingTopics from '../components/TechIntelegence/TrendingTopics';
+import SignalAnalysis from '../components/TechIntelegence/SignalAnalysis';
+import MarketGrowth from '../components/TechIntelegence/MarketGrowth';
+import EmergingTechnologies from '../components/TechIntelegence/EmergingTechnologies';
+import KeyPlayers from '../components/TechIntelegence/KeyPlayers';
+import FundingCharts from '../components/TechIntelegence/FundingCharts';
+import ExecutiveSummary from '../components/TechIntelegence/ExecutiveSummary';
+import Footer from '../components/TechIntelegence/Footer';
 
-
-const TechIntelligenceDashboard = () => {
+const TechIntelligenceDashboard = ({ theme = 'dark' }) => {
   const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
   const [data, setData] = useState(null);
   const [newsArticles, setNewsArticles] = useState([]);
@@ -27,6 +26,26 @@ const TechIntelligenceDashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [activeNewsTab, setActiveNewsTab] = useState('all');
   const [selectedTopicFilter, setSelectedTopicFilter] = useState('all');
+
+  // Theme-specific styles
+  const isLight = theme === 'light';
+  
+  const background = isLight 
+    ? "bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100" 
+    : "bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900";
+  
+  const textPrimary = isLight ? "text-slate-800" : "text-white";
+  const textSecondary = isLight ? "text-slate-600" : "text-slate-400";
+  const textAccent = isLight ? "text-blue-600" : "text-blue-400";
+  
+  const cardBg = isLight ? "bg-white" : "bg-slate-800/50";
+  const cardBorder = isLight ? "border-slate-300" : "border-blue-500/30";
+  const buttonPrimary = isLight 
+    ? "bg-blue-600 hover:bg-blue-700 text-white" 
+    : "bg-blue-600 hover:bg-blue-700 text-white";
+  const buttonDisabled = isLight ? "bg-slate-400" : "bg-slate-600";
+  const errorBg = isLight ? "bg-red-100 border-red-300" : "bg-red-500/20 border-red-500/50";
+  const errorText = isLight ? "text-red-700" : "text-red-300";
 
   useEffect(() => {
     fetchAnalysisResults();
@@ -183,10 +202,10 @@ const TechIntelligenceDashboard = () => {
 
   if (loading && !data && newsArticles.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
+      <div className={`min-h-screen ${background} flex items-center justify-center`}>
         <div className="text-center">
-          <Loader className="w-12 h-12 text-blue-400 animate-spin mx-auto mb-4" />
-          <p className="text-white text-xl">Loading Dashboard...</p>
+          <Loader className={`w-12 h-12 ${textAccent} animate-spin mx-auto mb-4`} />
+          <p className={`${textPrimary} text-xl`}>Loading Dashboard...</p>
         </div>
       </div>
     );
@@ -194,24 +213,24 @@ const TechIntelligenceDashboard = () => {
 
   if (!data && !loading && newsArticles.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-6">
-        <div className="bg-slate-800/50 backdrop-blur border border-blue-500/30 rounded-lg p-8 max-w-2xl">
+      <div className={`min-h-screen ${background} flex items-center justify-center p-6`}>
+        <div className={`${cardBg} backdrop-blur border ${cardBorder} rounded-lg p-8 max-w-2xl`}>
           <div className="text-center mb-6">
-            <Database className="w-20 h-20 text-blue-400 mx-auto mb-4" />
-            <h2 className="text-3xl font-bold text-white mb-3">DRDO Technology Intelligence Platform</h2>
-            <p className="text-slate-300 mb-6">Start comprehensive technology intelligence analysis</p>
+            <Database className={`w-20 h-20 ${textAccent} mx-auto mb-4`} />
+            <h2 className={`text-3xl font-bold ${textPrimary} mb-3`}>DRDO Technology Intelligence Platform</h2>
+            <p className={`${textSecondary} mb-6`}>Start comprehensive technology intelligence analysis</p>
           </div>
           
           {error && (
-            <div className="mb-6 bg-red-500/20 border border-red-500/50 rounded-lg p-4">
-              <p className="text-red-300 text-sm">{error}</p>
+            <div className={`mb-6 ${errorBg} rounded-lg p-4`}>
+              <p className={`${errorText} text-sm`}>{error}</p>
             </div>
           )}
           
           <button
             onClick={triggerNewAnalysis}
             disabled={analyzing}
-            className="w-full px-6 py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-3 text-lg"
+            className={`w-full px-6 py-4 ${analyzing ? buttonDisabled : buttonPrimary} text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-3 text-lg`}
           >
             {analyzing ? (
               <>
@@ -233,11 +252,12 @@ const TechIntelligenceDashboard = () => {
   const displayArticles = getDisplayArticles();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white p-6">
+    <div className={`min-h-screen ${background} ${textPrimary} p-6`}>
       <Header 
         lastUpdated={lastUpdated}
         analyzing={analyzing}
         triggerNewAnalysis={triggerNewAnalysis}
+        theme={theme}
       />
 
       {(newsArticles.length > 0 || classifiedNews) && (
@@ -249,48 +269,49 @@ const TechIntelligenceDashboard = () => {
           selectedTopicFilter={selectedTopicFilter}
           setSelectedTopicFilter={setSelectedTopicFilter}
           formatDate={formatDate}
+          theme={theme}
         />
       )}
 
       {data && (
         <>
-          {/* <StatsOverview data={data} /> */}
+          {/* <StatsOverview data={data} theme={theme} /> */}
           
           <div className="grid grid-cols-3 gap-6 mb-6">
-            <TrendingTopics data={data} />
-            <SignalAnalysis data={data} />
-            <MarketGrowth data={data} />
+            <TrendingTopics data={data} theme={theme} />
+            <SignalAnalysis data={data} theme={theme} />
+            <MarketGrowth data={data} theme={theme} />
           </div>
 
           <div className="grid grid-cols-2 gap-6 mb-6">
-            <EmergingTechnologies data={data} />
-            <KeyPlayers data={data} />
+            <EmergingTechnologies data={data} theme={theme} />
+            <KeyPlayers data={data} theme={theme} />
           </div>
 
           <div className="grid grid-cols-2 gap-6 mb-6">
-            <FundingCharts data={data} />
+            <FundingCharts data={data} theme={theme} />
           </div>
 
-          <ExecutiveSummary data={data} />
+          <ExecutiveSummary data={data} theme={theme} />
         </>
       )}
 
-      <Footer data={data} analyzing={analyzing} />
+      <Footer data={data} analyzing={analyzing} theme={theme} />
 
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-          background: #1e293b;
+          background: ${isLight ? '#f1f5f9' : '#1e293b'};
           border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #3b82f6;
+          background: ${isLight ? '#3b82f6' : '#3b82f6'};
           border-radius: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #2563eb;
+          background: ${isLight ? '#2563eb' : '#2563eb'};
         }
       `}</style>
     </div>
