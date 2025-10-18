@@ -8,38 +8,93 @@ import {
   ArrowRight,
   BarChart3,
   AlertTriangle,
-  Users
+  Users,
+  Zap,
+  Clock,
+  Target,
+  FileText
 } from 'lucide-react';
 
 const DRDOIntroHomepage = ({ theme = 'dark' }) => {
   const features = [
     {
       icon: Globe,
-      title: "Global Tech Monitoring",
-      description: "Track emerging technologies and research worldwide in real-time"
+      title: "Automated Data Aggregation",
+      description: "Automatically collects and aggregates vast amounts of global data from news, research papers, patents worldwide"
     },
     {
       icon: Cpu,
-      title: "AI-Powered Analysis",
-      description: "Advanced algorithms analyze technology trends and threats"
+      title: "AI-Powered Intelligence",
+      description: "Advanced LLM models perform deep processing and high-level intelligence synthesis"
     },
     {
       icon: BarChart3,
-      title: "Strategic Intelligence",
-      description: "Comprehensive insights for defense planning and decision making"
+      title: "Strategic Forecasting",
+      description: "Generates S-curve, H-curve analysis and TRL progression for strategic planning"
     },
     {
       icon: AlertTriangle,
-      title: "Threat Detection",
-      description: "Early warning system for potential security risks and vulnerabilities"
+      title: "Real-time Threat Detection",
+      description: "Early warning system for potential security risks and technology shifts"
     }
   ];
 
-  const quickStats = [
+  const capabilities = [
+    {
+      icon: Zap,
+      title: "Intelligent Classification",
+      description: "AI/ML pipeline scores and classifies data into Funding Alerts, Key Players, Trending Topics"
+    },
+    {
+      icon: Clock,
+      title: "Accelerated Intelligence",
+      description: "Reduces time from data discovery to actionable intelligence from months to near real-time"
+    },
+    {
+      icon: Target,
+      title: "Structured Reporting",
+      description: "Generates rich multi-vector JSON reports and strategic summaries"
+    },
+    {
+      icon: FileText,
+      title: "Interactive Dashboard",
+      description: "Comprehensive platform for easy consumption of analyzed intelligence"
+    }
+  ];
+
+  const impactStats = [
+    { number: "166.6M+", label: "Patent Analyzed" },
+    // { number: "3.55M+", label: "Research Papers Analyzed" },
     { number: "45+", label: "Countries Monitored" },
     { number: "28", label: "Technology Domains" },
-    { number: "150+", label: "Daily Analysis" },
-    { number: "12", label: "Active Alerts" }
+    { number: "99%", label: "Time Reduction" }
+  ];
+
+  const benefits = [
+    {
+      title: "Strategic Impact",
+      points: [
+        "Data-Driven Decisions for technology focus and procurement",
+        "Upskills researchers from manual data gatherers to strategic analysts",
+        "Strengthens indigenous defense R&D and strategic autonomy"
+      ]
+    },
+    {
+      title: "Operational Benefits", 
+      points: [
+        "Reduces thousands of manual research hours with automation",
+        "Unified intelligence layer for fragmented R&D data",
+        "Accelerates intelligence cycle to near real-time responses"
+      ]
+    },
+    {
+      title: "Economic Benefits",
+      points: [
+        "Significant cost and time savings for defense R&D",
+        "Optimizes allocation of defense budgets and personnel",
+        "Aligns with Aatmanirbhar Bharat national mission"
+      ]
+    }
   ];
 
   // Theme-specific styles
@@ -61,9 +116,9 @@ const DRDOIntroHomepage = ({ theme = 'dark' }) => {
   const statsBg = isLight ? "bg-white" : "bg-slate-800/30";
   const statsBorder = isLight ? "border-slate-200" : "border-blue-500/20";
   
-  const domainBg = isLight ? "bg-blue-50" : "bg-slate-700/20";
-  const domainHover = isLight ? "hover:bg-blue-100" : "hover:bg-slate-700/40";
-  const domainBorder = isLight ? "border-blue-100" : "";
+  const benefitBg = isLight ? "bg-blue-50" : "bg-slate-700/20";
+  const benefitHover = isLight ? "hover:bg-blue-100" : "hover:bg-slate-700/40";
+  const benefitBorder = isLight ? "border-blue-100" : "";
   
   const footerBorder = isLight ? "border-slate-200 bg-white" : "border-slate-700/50";
   const footerText = isLight ? "text-slate-500" : "text-slate-400";
@@ -86,43 +141,92 @@ const DRDOIntroHomepage = ({ theme = 'dark' }) => {
   
   const iconBg = isLight ? "bg-blue-100" : "bg-blue-500/20";
   const iconColor = isLight ? "text-blue-600" : "text-blue-400";
-  const shieldBg = isLight ? "bg-blue-500 shadow-lg" : "bg-blue-600";
-  const shieldColor = isLight ? "text-blue-500" : "text-blue-400";
 
   return (
     <div className={`min-h-screen ${background} ${textPrimary}`}>
       {/* Hero Section */}
       <div className="container mx-auto px-6 py-16">
         <div className="text-center mb-16">
-          <div className="flex justify-center mb-6">
-            <div className={`${shieldBg} p-4 rounded-2xl`}>
-              <Shield className="w-12 h-12 text-white" />
-            </div>
-          </div>
+<div className="flex justify-center mb-8"> {/* Increased bottom margin for better spacing */}
+  <div className="flex items-center gap-4">
+    <img  
+      src="/logo.svg"  
+      alt="SangamAI Logo"  
+      className="w-24 h-24 rounded-2xl shadow-lg"
+    />
+    {/* IMPORTANT: Update the fallback to match the new size and shape */}
+    <div className={`${isLight ? 'bg-blue-500' : 'bg-blue-600'} w-24 h-24 p-4 rounded-2xl hidden items-center justify-center`}>
+      <Shield className="w-16 h-16 text-white" />
+    </div>
+  </div>
+</div>
           
-          <h1 className={`text-5xl font-bold mb-6 ${heroGradient} bg-clip-text text-transparent`}>
-            DRDO Technology Intelligence Platform
-          </h1>
+<h1 className={`text-4xl md:text-5xl font-bold text-center mb-6 ${heroGradient} bg-clip-text text-transparent`}>
+  SangamAI - DRDO Technology Intelligence Platform
+</h1>
           
-          <p className={`text-xl ${textBlue} mb-8 max-w-3xl mx-auto leading-relaxed`}>
-            Advanced monitoring and analysis system for strategic defense technology intelligence. 
-            Track global innovations, assess threats, and stay ahead in the technology landscape.
+          <p className={`text-xl ${textBlue} mb-8 max-w-4xl mx-auto leading-relaxed`}>
+            An automated platform providing comprehensive technology intelligence and forecasting for DRDO. 
+            Significantly reduces workload for researchers and enables faster, data-driven strategic decision-making.
           </p>
           
           <div className="flex gap-4 justify-center">
-            <button className={`${buttonPrimary} px-8 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2`}>
+            <a href="/technology-intelligence" className={`${buttonPrimary} px-8 py-3 rounded-lg font-semibold transition-colors flex items-center gap-2`}>
               Enter Dashboard
               <ArrowRight className="w-4 h-4" />
-            </button>
-            <button className={`${buttonSecondary} px-8 py-3 rounded-lg font-semibold transition-colors`}>
-              Learn More
-            </button>
+            </a>
+            <a href="/analytics" className={`${buttonSecondary} px-8 py-3 rounded-lg font-semibold transition-colors`}>
+              View Analytics
+            </a>
           </div>
         </div>
 
-        {/* Quick Stats */}
+        {/* Problem Statement */}
+        {/* <div className={`${cardBg} ${cardBorder} rounded-2xl p-8 mb-16 ${isLight ? 'shadow-sm' : ''}`}>
+          <h2 className={`text-3xl font-bold text-center mb-8 ${textPrimary}`}>
+            Addressing Critical Defense Challenges
+          </h2>
+          <div className="grid grid-cols-1 md:grid-2 gap-6">
+            <div className={`p-6 ${benefitBg} rounded-lg ${benefitBorder}`}>
+              <h3 className={`text-xl font-semibold mb-4 ${textAccent}`}>The Problem</h3>
+              <ul className={`space-y-3 ${textSecondary}`}>
+                <li className="flex items-start gap-2">
+                  <span className={`${textAccent} mt-1`}>•</span>
+                  <span>Multiple layers of review lead to massive project delays (16% to 500% time overruns)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className={`${textAccent} mt-1`}>•</span>
+                  <span>Slow manual aggregation of 3.55M+ research papers, patents, and articles</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className={`${textAccent} mt-1`}>•</span>
+                  <span>Critical delay between data discovery and strategic action</span>
+                </li>
+              </ul>
+            </div>
+            <div className={`p-6 ${benefitBg} rounded-lg ${benefitBorder}`}>
+              <h3 className={`text-xl font-semibold mb-4 ${textAccent}`}>Our Solution</h3>
+              <ul className={`space-y-3 ${textSecondary}`}>
+                <li className="flex items-start gap-2">
+                  <span className={`${textAccent} mt-1`}>•</span>
+                  <span>Automated aggregation from WorldNews API, Semantic Scholar API, and global sources</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className={`${textAccent} mt-1`}>•</span>
+                  <span>AI/ML pipeline for intelligent classification and scoring</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className={`${textAccent} mt-1`}>•</span>
+                  <span>Real-time intelligence synthesis and strategic reporting</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div> */}
+
+        {/* Impact Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          {quickStats.map((stat, index) => (
+          {impactStats.map((stat, index) => (
             <div key={index} className={`text-center p-6 ${statsBg} rounded-xl ${statsBorder} ${isLight ? 'shadow-sm hover:shadow-md transition-shadow' : ''}`}>
               <div className={`text-3xl font-bold ${textAccent} mb-2`}>{stat.number}</div>
               <div className={textSecondary}>{stat.label}</div>
@@ -130,10 +234,10 @@ const DRDOIntroHomepage = ({ theme = 'dark' }) => {
           ))}
         </div>
 
-        {/* Features Grid */}
+        {/* Core Features */}
         <div className="mb-20">
           <h2 className={`text-3xl font-bold text-center mb-12 ${textPrimary}`}>
-            Comprehensive Technology Intelligence
+            Core Platform Features
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -149,44 +253,150 @@ const DRDOIntroHomepage = ({ theme = 'dark' }) => {
           </div>
         </div>
 
-        {/* Technology Domains */}
-        <div className={`${cardBg} ${cardBorder} rounded-2xl p-8 mb-16 ${isLight ? 'shadow-sm' : ''}`}>
-          <h2 className={`text-3xl font-bold text-center mb-8 ${textPrimary}`}>
-            Key Technology Domains
+        {/* Advanced Capabilities */}
+        <div className="mb-20">
+          <h2 className={`text-3xl font-bold text-center mb-12 ${textPrimary}`}>
+            Advanced Capabilities
           </h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              "Quantum Computing",
-              "Artificial Intelligence", 
-              "Semiconductors",
-              "Cybersecurity",
-              "Hypersonic Systems",
-              "Biotechnology",
-              "Space Technology",
-              "Advanced Materials"
-            ].map((domain, index) => (
-              <div key={index} className={`text-center p-4 ${domainBg} rounded-lg ${domainHover} transition-colors ${domainBorder}`}>
-                <div className={`${textAccent} font-medium`}>{domain}</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {capabilities.map((capability, index) => (
+              <div key={index} className={`${cardBg} ${cardBorder} rounded-xl p-6 text-center ${cardHover} transition-all ${isLight ? 'shadow-sm' : ''}`}>
+                <div className={`${iconBg} p-3 rounded-lg w-12 h-12 mx-auto mb-4 flex items-center justify-center`}>
+                  <capability.icon className={`w-6 h-6 ${iconColor}`} />
+                </div>
+                <h3 className={`font-semibold text-lg mb-3 ${textPrimary}`}>{capability.title}</h3>
+                <p className={`${textSecondary} text-sm leading-relaxed`}>{capability.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Benefits Section */}
+        <div className={`${cardBg} ${cardBorder} rounded-2xl p-8 mb-16 ${isLight ? 'shadow-sm' : ''}`}>
+          <h2 className={`text-3xl font-bold text-center mb-8 ${textPrimary}`}>
+            Strategic Impact & Benefits
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {benefits.map((benefit, index) => (
+              <div key={index} className={`p-6 ${benefitBg} rounded-lg ${benefitBorder} ${benefitHover} transition-colors`}>
+                <h3 className={`text-xl font-semibold mb-4 ${textAccent}`}>{benefit.title}</h3>
+                <ul className={`space-y-2 ${textSecondary}`}>
+                  {benefit.points.map((point, pointIndex) => (
+                    <li key={pointIndex} className="flex items-start gap-2 text-sm">
+                      <span className={`${textAccent} mt-1`}>•</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Platform Modules */}
+        <div className="mb-16">
+          <h2 className={`text-3xl font-bold text-center mb-12 ${textPrimary}`}>
+            Explore Our Intelligence Modules
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { 
+                name: 'Technology Intelligence', 
+                href: '/technology-intelligence', 
+                icon: '🔍',
+                description: 'Real-time monitoring and analysis of global defense technologies'
+              },
+              { 
+                name: 'Analytics & Forecasting', 
+                href: '/analytics', 
+                icon: '📈',
+                description: 'Advanced AI forecasting with S-curve and TRL analysis'
+              },
+              { 
+                name: 'Patent Analysis', 
+                href: '/patents', 
+                icon: '📑',
+                description: 'Comprehensive patent landscape and innovation tracking'
+              },
+              { 
+                name: 'Research Publications', 
+                href: '/publications', 
+                icon: '📚',
+                description: 'Global research papers and academic intelligence'
+              }
+            ].map((module, index) => (
+              <a
+                key={index}
+                href={module.href}
+                className={`group relative overflow-hidden ${cardBg} ${cardBorder} rounded-xl p-6 ${cardHover} transition-all duration-300 transform hover:scale-105 ${isLight ? 'shadow-sm hover:shadow-lg' : ''}`}
+              >
+                {/* Background gradient effect on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl`}></div>
+                
+                <div className="relative z-10">
+                  {/* Icon with enhanced styling */}
+                  <div className={`text-3xl mb-4 transform group-hover:scale-110 transition-transform duration-300`}>
+                    {module.icon}
+                  </div>
+                  
+                  {/* Module title */}
+                  <h3 className={`font-bold text-lg mb-3 ${textPrimary} group-hover:${textAccent} transition-colors duration-300`}>
+                    {module.name}
+                  </h3>
+                  
+                  {/* Description */}
+                  <p className={`text-sm ${textSecondary} leading-relaxed mb-4`}>
+                    {module.description}
+                  </p>
+                  
+                  {/* CTA arrow with animation */}
+                  <div className={`flex items-center justify-center gap-1 text-sm font-medium ${textAccent} group-hover:${isLight ? 'text-blue-700' : 'text-blue-300'} transition-colors duration-300`}>
+                    {/* <span>Explore</span> */}
+                    {/* <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" /> */}
+                  </div>
+                </div>
+                
+                {/* Subtle border animation */}
+                <div className={`absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-blue-400/20 transition-all duration-300`}></div>
+              </a>
+            ))}
+          </div>
+          
+          {/* Quick stats below modules */}
+          <div className="mt-12 text-center">
+            <div className={`inline-flex items-center gap-6 ${textSecondary} text-sm`}>
+              <span className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${isLight ? 'bg-green-500' : 'bg-green-400'}`}></div>
+                Real-time Data Updates
+              </span>
+              <span className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${isLight ? 'bg-blue-500' : 'bg-blue-400'}`}></div>
+                AI-Powered Insights
+              </span>
+              <span className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${isLight ? 'bg-purple-500' : 'bg-purple-400'}`}></div>
+                Interactive Dashboards
+              </span>
+            </div>
           </div>
         </div>
 
         {/* CTA Section */}
         <div className="text-center">
           <h2 className={`text-2xl font-bold mb-4 ${textPrimary}`}>
-            Ready to Explore Strategic Intelligence?
+            Ready to Transform Defense Intelligence?
           </h2>
           <p className={`${textBlue} mb-6 max-w-2xl mx-auto`}>
-            Access comprehensive technology analysis, threat assessments, and strategic insights 
-            for defense research and development.
+            Join the future of strategic defense technology intelligence. Reduce manual workload, 
+            accelerate decision-making, and strengthen national security capabilities.
           </p>
-          <button className={`${ctaGradient} text-white px-10 py-4 rounded-lg font-semibold transition-all flex items-center gap-2 mx-auto`}>
+          <a href="/technology-intelligence" className={`${ctaGradient} text-white px-10 py-4 rounded-lg font-semibold transition-all flex items-center gap-2 mx-auto w-fit`}>
             <TrendingUp className="w-5 h-5" />
             Launch Intelligence Dashboard
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
         </div>
       </div>
 
@@ -195,11 +405,22 @@ const DRDOIntroHomepage = ({ theme = 'dark' }) => {
         <div className="container mx-auto px-6 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Shield className={`w-6 h-6 ${shieldColor}`} />
-              <span className={`font-semibold ${textPrimary}`}>DRDO Technology Intelligence</span>
+              <img 
+                src="/logo.svg" 
+                alt="SangamAI Logo" 
+                className="w-6 h-6"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              <div className="hidden">
+                <Shield className={`w-6 h-6 ${iconColor}`} />
+              </div>
+              <span className={`font-semibold ${textPrimary}`}>SangamAI - DRDO Technology Intelligence</span>
             </div>
             <div className={`${footerText} text-sm`}>
-              Strategic Defense Research & Analysis
+              Empowering Strategic Defense Research & Analysis
             </div>
           </div>
         </div>
